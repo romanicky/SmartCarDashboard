@@ -92,6 +92,11 @@ Window {
                 Button {
                     text: modelData
                     implicitWidth: 60
+                    onClicked: {
+                        if (modelData === "Car") {
+                            Theme.toggle();
+                        }
+                    }
                 }
             }
         }
