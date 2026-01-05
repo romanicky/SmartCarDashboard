@@ -1,8 +1,9 @@
 import QtQuick 2.15
-import "." // Import thư mục chứa Theme
+import "../themes"
 
 Rectangle {
-    width: 200; height: 150
+    implicitWidth: 200
+    implicitHeight: 150
     radius: 15
 
     // Tự động cập nhật khi Theme.isDark thay đổi
@@ -12,7 +13,7 @@ Rectangle {
 
     Text {
         anchors.centerIn: parent
-        text: "Speed: 84 km/h"
+        text: ""
         color: Theme.colors.textMain
     }
 }
