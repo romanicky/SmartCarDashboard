@@ -17,13 +17,14 @@ DashboardCard {
             Layout.fillWidth: true
             spacing: 5
             Image {
-                source: "qrc:/assets/images/honda_e.png" // Thay bằng path ảnh của bạn
+                source: "qrc:/qt/qml/SmartCarDashboard/asset/images/car_left.png" // use PNG once converted and bundled
                 fillMode: Image.PreserveAspectFit
-                Layout.preferredHeight: 120
+                Layout.fillWidth: true
+                Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter
             }
             Text {
-                text: "Honda e ⓘ"
+                text: "Vinfast"
                 color: Theme.colors.textSecondary
                 font.pixelSize: 14
                 Layout.alignment: Qt.AlignHCenter
@@ -34,12 +35,12 @@ DashboardCard {
         Rectangle {
             Layout.fillWidth: true
             height: 8
-            color: "#2A2D35"
+            color: Theme.colors.card
             radius: 4
             Rectangle {
                 width: parent.width * 0.65 // Giả lập 65% pin
                 height: parent.height
-                color: "#43CF7C" // Xanh lá cây
+                color: Theme.colors.accent
                 radius: 4
             }
         }
@@ -77,9 +78,9 @@ DashboardCard {
             Rectangle {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                color: "#23262E"
+                color: Theme.colors.card
                 radius: 20
-                border.color: "#2A2D35"
+                border.color: Theme.colors.textSecondary
                 Column {
                     anchors.centerIn: parent
                     Text {
@@ -110,7 +111,7 @@ DashboardCard {
         Rectangle {
             Layout.fillWidth: true
             height: 60
-            color: "#23262E"
+            color: Theme.colors.card
             radius: 30
             RowLayout {
                 anchors.fill: parent
@@ -119,10 +120,10 @@ DashboardCard {
 
                 GearButton {
                     text: "N"
+                    isActive: true
                 }
                 GearButton {
                     text: "D"
-                    isActive: true
                 } // Active state
                 GearButton {
                     text: "R"
