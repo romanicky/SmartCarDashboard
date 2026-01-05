@@ -15,7 +15,7 @@ RowLayout {
             implicitWidth: 60
             onClicked: {
                 if (modelData === "Car") {
-                    Theme.toggle()
+                    Theme.toggle();
                 }
             }
         }

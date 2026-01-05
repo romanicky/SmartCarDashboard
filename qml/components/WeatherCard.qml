@@ -21,10 +21,21 @@ Rectangle {
 
         RowLayout {
             spacing: 8
-            Text { text: "22°C"; color: Theme.colors.textMain; font.pixelSize: 28 }
-            Text { text: "☀︎"; color: Theme.colors.textMain; font.pixelSize: 28 }
+            Text {
+                text: "22°C"
+                color: Theme.colors.textMain
+                font.pixelSize: 28
+            }
+            Text {
+                text: "☀︎"
+                color: Theme.colors.textMain
+                font.pixelSize: 28
+            }
         }
 
-        Text { text: "Sunny"; color: Theme.colors.textSecondary }
+        Text {
+            text: "Sunny"
+            color: Theme.colors.textSecondary
+        }
     }
 }

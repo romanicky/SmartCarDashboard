@@ -17,14 +17,24 @@ Rectangle {
             spacing: 12
             // Placeholder image box
             Rectangle {
-                width: 80; height: 60; radius: 8
+                width: 80
+                height: 60
+                radius: 8
                 color: Theme.colors.background
             }
 
             ColumnLayout {
                 spacing: 4
-                Text { text: "Octavia"; color: Theme.colors.textMain; font.pixelSize: 18 }
-                Text { text: "VIN: XXXX-YYYY"; color: Theme.colors.textSecondary; font.pixelSize: 12 }
+                Text {
+                    text: "Octavia"
+                    color: Theme.colors.textMain
+                    font.pixelSize: 18
+                }
+                Text {
+                    text: "VIN: XXXX-YYYY"
+                    color: Theme.colors.textSecondary
+                    font.pixelSize: 12
+                }
             }
         }
 
@@ -32,8 +42,15 @@ Rectangle {
         RowLayout {
             anchors.margins: 4
             spacing: 16
-            Text { text: "Speed"; color: Theme.colors.textSecondary }
-            Text { text: "0 km/h"; color: Theme.colors.textMain; font.pixelSize: 28 }
+            Text {
+                text: "Speed"
+                color: Theme.colors.textSecondary
+            }
+            Text {
+                text: "0 km/h"
+                color: Theme.colors.textMain
+                font.pixelSize: 28
+            }
         }
     }
 }

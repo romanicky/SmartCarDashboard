@@ -14,7 +14,9 @@ RowLayout {
         font.pixelSize: 20
     }
 
-    Item { Layout.fillWidth: true }
+    Item {
+        Layout.fillWidth: true
+    }
 
     Text {
         text: "4G 🔋 Octavia Phone"

@@ -19,7 +19,9 @@ Rectangle {
             Layout.alignment: Qt.AlignVCenter
         }
 
-        Item { Layout.fillWidth: true }
+        Item {
+            Layout.fillWidth: true
+        }
 
         Button {
             text: "▶"
