@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import "." // Import thư mục chứa Theme
+import "../themes"
 
 Rectangle {
     width: 200; height: 150
