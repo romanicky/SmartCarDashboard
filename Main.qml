@@ -1,11 +1,12 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
-// import "Theme" 1.0
+import "qml/themes"
 
 Window {
-    width: 1280; height: 720
-    color: "#121216"
+    width: 1280
+    height: 720
+    color: Theme.colors.background
     visible: true
 
     ColumnLayout {
@@ -16,9 +17,18 @@ Window {
         // --- 1. TOP BAR ---
         RowLayout {
             Layout.fillWidth: true
-            Text { text: "09:42"; color: "white"; font.pixelSize: 20 }
-            Item { Layout.fillWidth: true } // Spacer
-            Text { text: "4G 🔋 Octavia Phone"; color: "white" }
+            Text {
+                text: "09:42"
+                color: Theme.colors.textMain
+                font.pixelSize: 20
+            }
+            Item {
+                Layout.fillWidth: true
+            } // Spacer
+            Text {
+                text: "4G 🔋 Octavia Phone"
+                color: Theme.colors.textMain
+            }
         }
 
         // --- 2. MAIN CONTENT (GRID) ---
@@ -35,7 +45,8 @@ Window {
                 Layout.rowSpan: 2
                 Layout.preferredWidth: 300
                 Layout.fillHeight: true
-                color: "#1c1c24"; radius: 15
+                color: Theme.colors.card
+                radius: 15
                 // Nội dung: Image xe, Speed text...
             }
 
@@ -43,16 +54,22 @@ Window {
             Rectangle {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                color: "#1c1c24"; radius: 15
+                color: Theme.colors.card
+                radius: 15
                 clip: true
-                Text { anchors.centerIn: parent; text: "Map View"; color: "gray" }
+                Text {
+                    anchors.centerIn: parent
+                    text: "Map View"
+                    color: Theme.colors.textSecondary
+                }
             }
 
             // Thẻ Thời tiết (Cột phải, hàng trên)
             Rectangle {
                 Layout.preferredWidth: 250
                 Layout.fillHeight: true
-                color: "#5eb1f3"; radius: 15 // Màu xanh thời tiết
+                color: Theme.colors.accent
+                radius: 15 // Màu xanh thời tiết
             }
 
             // Thẻ Âm nhạc (Cột giữa + phải, hàng dưới)
@@ -60,7 +77,8 @@ Window {
                 Layout.columnSpan: 2
                 Layout.fillWidth: true
                 Layout.preferredHeight: 200
-                color: "#1c1c24"; radius: 15
+                color: Theme.colors.card
+                radius: 15
             }
         }
 
@@ -71,12 +89,15 @@ Window {
             // Thêm các biểu tượng Home, Map, Car, Settings ở đây
             Repeater {
                 model: ["Home", "Nav", "Car", "Menu"]
-                Button { text: modelData; implicitWidth: 60 }
+                Button {
+                    text: modelData
+                    implicitWidth: 60
+                }
             }
         }
     }
 
     Component.onCompleted: {
-        // console.log("Theme:", Theme.current);
+        // console.log("Theme isDark:", Theme.isDark);
     }
 }

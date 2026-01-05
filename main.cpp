@@ -13,6 +13,9 @@ int main(int argc, char *argv[])
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.loadFromModule("SmartCarDashboard", "Main");
+    engine.addImportPath("qrc:/qml");
+
+    // engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
     return app.exec();
 }
