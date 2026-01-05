@@ -4,7 +4,7 @@ import "../themes"
 
 DashboardCard {
     id: root
-    implicitWidth: 350
+    implicitWidth: 480
     implicitHeight: 600
 
     ColumnLayout {
