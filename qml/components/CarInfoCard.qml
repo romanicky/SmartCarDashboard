@@ -17,14 +17,14 @@ DashboardCard {
             Layout.fillWidth: true
             spacing: 5
             Image {
-                source: "qrc:/qt/qml/SmartCarDashboard/asset/images/car_left.png" // use PNG once converted and bundled
+                source: CarInfo.imageSource
                 fillMode: Image.PreserveAspectFit
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 Layout.alignment: Qt.AlignHCenter
             }
             Text {
-                text: "Vinfast"
+                text: CarInfo.vehicleName
                 color: Theme.colors.textSecondary
                 font.pixelSize: 14
                 Layout.alignment: Qt.AlignHCenter
@@ -52,17 +52,17 @@ DashboardCard {
 
             // Reusable Stat Component
             StatItem {
-                value: "204"
+                value: String(CarInfo.range)
                 unit: "km"
                 label: "Remaining"
             }
             StatItem {
-                value: "128"
+                value: String(CarInfo.average)
                 unit: "Wh/km"
                 label: "Average"
             }
             StatItem {
-                value: "35.5"
+                value: String(CarInfo.capacity)
                 unit: "kWh"
                 label: "Full Capacity"
             }
@@ -84,7 +84,7 @@ DashboardCard {
                 Column {
                     anchors.centerIn: parent
                     Text {
-                        text: "84"
+                        text: String(CarInfo.speed)
                         color: Theme.colors.textMain
                         font.pixelSize: 48
                         font.bold: true
