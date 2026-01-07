@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "src/CarInfoModel.h"
+#include "src/CarDataReceiver.h"
 
 int main(int argc, char *argv[])
 {
@@ -11,12 +12,16 @@ int main(int argc, char *argv[])
 
     auto *carInfo = new CarInfoModel(&app);
     carInfo->setVehicleName("Vinfast");
-    carInfo->setSpeed(84);
+    carInfo->setSpeed(0);
     carInfo->setRange(204);
     carInfo->setAverage(128.0);
     carInfo->setCapacity(35.5);
     carInfo->setImageSource("qrc:/qt/qml/SmartCarDashboard/asset/images/car_left.png");
     engine.rootContext()->setContextProperty("CarInfo", carInfo);
+
+    // Connect to car simulator
+    auto *dataReceiver = new CarDataReceiver(carInfo, &app);
+    dataReceiver->connectToSimulator();
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,
