@@ -130,16 +130,19 @@ DashboardCard {
 
                 GearButton {
                     text: "N"
-                    isActive: true
+                    isActive: CarInfo.gear === "N"
                 }
                 GearButton {
                     text: "D"
-                } // Active state
+                    isActive: CarInfo.gear === "D"
+                }
                 GearButton {
                     text: "R"
+                    isActive: CarInfo.gear === "R"
                 }
                 GearButton {
                     text: "P"
+                    isActive: CarInfo.gear === "P"
                 }
             }
         }

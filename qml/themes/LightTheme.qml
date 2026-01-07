@@ -7,5 +7,7 @@ QtObject {
     readonly property color textSecondary: "#65676B"
     readonly property color accent: "#3d85f5"
     readonly property color gearActive: "#3d85f5"
+    readonly property color cardBorder: "#E0E0E0"
+
     readonly property real shadowOpacity: 0.1
 }
