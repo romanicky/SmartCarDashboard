@@ -6,6 +6,7 @@ import "../themes"
 Rectangle {
     id: weatherCard
     color: Theme.colors.accent
+    border.color: Theme.colors.cardBorder
     radius: 15
 
     ColumnLayout {

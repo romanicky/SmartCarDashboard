@@ -6,10 +6,10 @@ Rectangle {
     implicitHeight: 150
     radius: 15
 
-    // Tự động cập nhật khi Theme.isDark thay đổi
     color: Theme.colors.card
 
-    border.color: Theme.isDark ? "#2a2d35" : "#E0E0E0"
+    border.color: Theme.colors.cardBorder
+    border.width: 1
 
     Text {
         anchors.centerIn: parent

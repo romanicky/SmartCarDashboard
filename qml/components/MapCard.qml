@@ -6,6 +6,8 @@ import "../themes"
 Rectangle {
     id: mapCard
     color: Theme.colors.card
+    border.color: Theme.colors.cardBorder
+    border.width: 1
     radius: 15
 
     // Placeholder map content — replace with MapItem or WebEngine as needed

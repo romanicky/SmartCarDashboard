@@ -82,9 +82,19 @@ DashboardCard {
                 radius: 20
                 border.color: Theme.colors.textSecondary
                 Column {
+                    id: speedColumn
                     anchors.centerIn: parent
+                    property int animatedSpeed: CarInfo.speed
+
+                    Behavior on animatedSpeed {
+                        NumberAnimation {
+                            duration: 500
+                            easing.type: Easing.InOutQuad
+                        }
+                    }
+
                     Text {
-                        text: String(CarInfo.speed)
+                        text: String(speedColumn.animatedSpeed)
                         color: Theme.colors.textMain
                         font.pixelSize: 48
                         font.bold: true
@@ -120,16 +130,19 @@ DashboardCard {
 
                 GearButton {
                     text: "N"
-                    isActive: true
+                    isActive: CarInfo.gear === "N"
                 }
                 GearButton {
                     text: "D"
-                } // Active state
+                    isActive: CarInfo.gear === "D"
+                }
                 GearButton {
                     text: "R"
+                    isActive: CarInfo.gear === "R"
                 }
                 GearButton {
                     text: "P"
+                    isActive: CarInfo.gear === "P"
                 }
             }
         }
