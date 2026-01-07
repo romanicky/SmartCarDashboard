@@ -49,6 +49,7 @@ void CarDataReceiver::onReadyRead()
             if (obj.contains("speed"))
             {
                 m_carModel->setSpeed(obj["speed"].toInt());
+                qDebug() << "Speed:" << obj["speed"].toInt();
             }
             if (obj.contains("leftSignal"))
             {
@@ -58,6 +59,10 @@ void CarDataReceiver::onReadyRead()
             if (obj.contains("rightSignal"))
             {
                 qDebug() << "Right signal:" << obj["rightSignal"].toBool();
+            }
+            if (obj.contains("gear"))
+            {
+                m_carModel->setGear(obj["gear"].toString());
             }
         }
     }
