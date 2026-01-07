@@ -82,9 +82,19 @@ DashboardCard {
                 radius: 20
                 border.color: Theme.colors.textSecondary
                 Column {
+                    id: speedColumn
                     anchors.centerIn: parent
+                    property int animatedSpeed: CarInfo.speed
+
+                    Behavior on animatedSpeed {
+                        NumberAnimation {
+                            duration: 500
+                            easing.type: Easing.InOutQuad
+                        }
+                    }
+
                     Text {
-                        text: String(CarInfo.speed)
+                        text: String(speedColumn.animatedSpeed)
                         color: Theme.colors.textMain
                         font.pixelSize: 48
                         font.bold: true
