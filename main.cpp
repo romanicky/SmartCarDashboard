@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     auto *carInfo = new CarInfoModel(&app);
     carInfo->setVehicleName("Vinfast");
     carInfo->setSpeed(84);
-    carInfo->setRange(2014);
+    carInfo->setRange(204);
     carInfo->setAverage(128.0);
     carInfo->setCapacity(35.5);
     carInfo->setImageSource("qrc:/qt/qml/SmartCarDashboard/asset/images/car_left.png");
