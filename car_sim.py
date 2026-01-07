@@ -16,10 +16,10 @@ class CarSimulatorGUI:
         self.right_signal = False
 
         # --- UI Components ---
-        self.btn_add = tk.Button(root, text="+10 km/h", command=lambda: self.speed_slider.set(min(self.speed + 10, 220)))
+        self.btn_add = tk.Button(root, text="+10 km/h", command=self.increase_speed)
         self.btn_add.pack(pady=5)
 
-        self.btn_sub = tk.Button(root, text="-10 km/h", command=lambda: self.speed_slider.set(max(self.speed - 10, 0)))
+        self.btn_sub = tk.Button(root, text="-10 km/h", command=self.decrease_speed)
         self.btn_sub.pack(pady=5)
 
         # Nút bấm Xi-nhan
@@ -46,9 +46,13 @@ class CarSimulatorGUI:
         self.server_thread = threading.Thread(target=self.start_server, daemon=True)
         self.server_thread.start()
 
-    def update_speed(self, val):
-        self.speed = int(float(val))
-        self.speed_label.config(text=str(self.speed))
+    def increase_speed(self):
+        if self.current_gear in ["D", "R"]:
+            self.speed = min(self.speed + 10, 200)
+
+    def decrease_speed(self):
+        if self.current_gear in ["D", "R"]:
+            self.speed = max(self.speed - 10, 0)
 
     def toggle_left(self):
         self.left_signal = not self.left_signal
@@ -60,6 +64,9 @@ class CarSimulatorGUI:
 
     def select_gear(self, gear):
         self.current_gear = gear
+        # Reset speed to 0 for N, R and P gears
+        if gear in ["N", "P", "R"]:
+            self.speed = 0
         # Update button colors - highlight selected gear
         for g, btn in self.gear_buttons.items():
             btn.config(bg="blue" if g == gear else "systemButtonFace")

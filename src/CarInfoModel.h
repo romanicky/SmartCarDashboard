@@ -13,6 +13,7 @@ class CarInfoModel : public QObject
     Q_PROPERTY(double average READ average WRITE setAverage NOTIFY averageChanged)
     Q_PROPERTY(double capacity READ capacity WRITE setCapacity NOTIFY capacityChanged)
     Q_PROPERTY(QString imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)
+    Q_PROPERTY(QString gear READ gear WRITE setGear NOTIFY gearChanged)
 
 public:
     explicit CarInfoModel(QObject *parent = nullptr);
@@ -35,6 +36,9 @@ public:
     QString imageSource() const;
     void setImageSource(const QString &src);
 
+    QString gear() const;
+    void setGear(const QString &g);
+
 signals:
     void vehicleNameChanged();
     void speedChanged();
@@ -42,6 +46,7 @@ signals:
     void averageChanged();
     void capacityChanged();
     void imageSourceChanged();
+    void gearChanged();
 
 private:
     QString m_vehicleName;
@@ -50,6 +55,7 @@ private:
     double m_average = 0.0;
     double m_capacity = 0.0;
     QString m_imageSource;
+    QString m_gear;
 };
 
 #endif

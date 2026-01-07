@@ -58,3 +58,12 @@ void CarInfoModel::setImageSource(const QString &src)
     m_imageSource = src;
     emit imageSourceChanged();
 }
+
+QString CarInfoModel::gear() const { return m_gear; }
+void CarInfoModel::setGear(const QString &g)
+{
+    if (m_gear == g)
+        return;
+    m_gear = g;
+    emit gearChanged();
+}
