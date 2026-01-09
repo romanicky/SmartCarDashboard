@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
+import "../managers"
 import "../themes"
 
 Rectangle {
@@ -11,6 +12,11 @@ Rectangle {
     Layout.fillHeight: true
     radius: 25
     color: isActive ? Theme.colors.accent : "transparent"
+
+    onIsActiveChanged: {
+        if (isActive)
+            SoundManager.playClick();
+    }
 
     Text {
         anchors.centerIn: parent

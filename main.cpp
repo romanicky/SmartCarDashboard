@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+    engine.addImportPath("qrc:/qml");
 
     auto *carInfo = new CarInfoModel(&app);
     carInfo->setVehicleName("Vinfast");
@@ -30,7 +31,6 @@ int main(int argc, char *argv[])
         { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
     engine.loadFromModule("SmartCarDashboard", "Main");
-    engine.addImportPath("qrc:/qml");
 
     return app.exec();
 }

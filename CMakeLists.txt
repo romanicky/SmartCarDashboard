@@ -35,6 +35,7 @@ qt_add_qml_module(appSmartCarDashboard
     qml/components/BottomBar.qml
     qml/components/StatItem.qml
     qml/components/GearButton.qml
+    qml/managers/SoundManager.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

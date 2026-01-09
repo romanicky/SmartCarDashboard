@@ -1,0 +1,2 @@
+module SoundManager
+singleton SoundManager 1.0 SoundManager.qml
