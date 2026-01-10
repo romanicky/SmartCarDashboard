@@ -14,8 +14,8 @@ Rectangle {
     clip: true
 
     // Map properties - configure as needed
-    property double latitude: 37.7749    // San Francisco default
-    property double longitude: -122.4194
+    property double latitude: 10.8231    // Ho Chi Minh City
+    property double longitude: 106.6297
     property int zoomLevel: 14
     property string mapPluginName: "osm"   // use OSM plugin to avoid HERE dependency
 
@@ -31,6 +31,18 @@ Rectangle {
         center: QtPositioning.coordinate(mapCard.latitude, mapCard.longitude)
         zoomLevel: mapCard.zoomLevel
         copyrightsVisible: false
+
+        // Enable pan and zoom gestures
+        PinchHandler {
+            target: null
+            onActiveChanged: if (active)
+                map.zoomLevel = Math.max(map.minimumZoomLevel, Math.min(map.maximumZoomLevel, map.zoomLevel + centroid.scale - 1))
+        }
+
+        DragHandler {
+            target: null
+            onTranslationChanged: map.pan(-translation.x, -translation.y)
+        }
 
         // Ensure a map type is selected when available
         Component.onCompleted: {
