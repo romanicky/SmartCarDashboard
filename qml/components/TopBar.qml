@@ -8,10 +8,30 @@ RowLayout {
     Layout.fillWidth: true
     spacing: 8
 
-    Text {
-        text: "09:42"
-        color: Theme.colors.textMain
-        font.pixelSize: 20
+    property date currentTime: new Date()
+
+    Timer {
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: topBar.currentTime = new Date()
+    }
+
+    RowLayout {
+        spacing: 12
+
+        Text {
+            text: Qt.formatDateTime(topBar.currentTime, "MMM dd")
+            color: Theme.colors.textSecondary
+            font.pixelSize: 18
+        }
+
+        Text {
+            text: Qt.formatTime(topBar.currentTime, "hh:mm")
+            color: Theme.colors.textMain
+            font.pixelSize: 20
+            font.bold: true
+        }
     }
 
     Item {
@@ -19,7 +39,7 @@ RowLayout {
     }
 
     Text {
-        text: "4G 🔋 Octavia Phone"
+        text: "5G 🔋 MobiFone"
         color: Theme.colors.textMain
     }
 }
