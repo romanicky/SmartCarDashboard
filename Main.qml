@@ -46,7 +46,7 @@ Window {
             MusicCard {
                 Layout.columnSpan: 2
                 Layout.fillWidth: true
-                Layout.preferredHeight: 200
+                Layout.preferredHeight: 150
             }
         }
 
