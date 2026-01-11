@@ -2,5 +2,11 @@
     <qresource prefix="/">
         <file>asset/images/car_left.svg</file>
         <file>asset/images/car_left.png</file>
+        <file>qml/components/MusicButton.qml</file>
+        <file>src/Music/LuonYeuDoi-Den-8692742.mp3</file>
+        <file>src/Music/MuonNganGiacMo-Kha-35861436.mp3</file>
+        <file>src/Music/przwye8p0e.mp3</file>
+        <file>src/Music/ThucGiac-DaLAB-7048212.mp3</file>
+        <file>src/Music/TungNgayYeuEmAcoustic-buitruonglinh-16952808.mp3</file>
     </qresource>
 </RCC>

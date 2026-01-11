@@ -3,10 +3,15 @@
 #include <QQmlContext>
 #include "src/CarInfoModel.h"
 #include "src/CarDataReceiver.h"
+#include "musicplayer.h"
+#include "radiusimage.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+
+    qmlRegisterType<MusicPlayer>("MusicPlayerlib", 1, 0, "MusicPlayer");
+    qmlRegisterType<RadiusImage>("RadiusImagelib", 1, 0,"RadiusImage");
 
     QQmlApplicationEngine engine;
 
