@@ -168,6 +168,9 @@ Rectangle {
                     cursorShape: Qt.PointingHandCursor
                     onClicked: playButton.clicked()
                 }
+                onButtonClicked {
+
+                }
             }
 
             Button {
