@@ -9,5 +9,18 @@
         <file>asset/icons/pause.svg</file>
         <file>asset/icons/play.svg</file>
         <file>asset/icons/prev.svg</file>
+        <file>asset/wea/6h_8h.png</file>
+        <file>asset/wea/8h_15h.png</file>
+        <file>asset/wea/15h_18h.png</file>
+        <file>asset/wea/18h_6h.png</file>
+        <file>asset/wea/cloud.png</file>
+        <file>asset/wea/rain.png</file>
+        <file>asset/wea/cloudy.png</file>
+        <file>asset/wea/moon.png</file>
+        <file>asset/wea/rainicon.png</file>
+        <file>asset/wea/sun.png</file>
     </qresource>
+    <qresource prefix="/wea"/>
+    <qresource prefix="/WEATHER"/>
+    <qresource lang="englis" prefix="/weather"/>
 </RCC>
