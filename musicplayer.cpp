@@ -1,4 +1,5 @@
 #include "musicplayer.h"
+#include <QBuffer>
 
 MusicPlayer::MusicPlayer(QObject *parent)
     : QObject{parent}
@@ -39,7 +40,35 @@ void MusicPlayer::playMusic()
     default:
         break;
     }
+}
 
+void MusicPlayer::nextTrack()
+{
+    if (playlist.isEmpty())
+        return;
+    m_currentTrackIndex = (m_currentTrackIndex + 1) % playlist.count();
+    playTrackAtIndex(m_currentTrackIndex);
+}
+
+void MusicPlayer::previousTrack()
+{
+    if (playlist.isEmpty())
+        return;
+    m_currentTrackIndex = (m_currentTrackIndex - 1 + playlist.count()) % playlist.count();
+    playTrackAtIndex(m_currentTrackIndex);
+}
+
+void MusicPlayer::playTrackAtIndex(int index)
+{
+    if (index < 0 || index >= playlist.count())
+        return;
+    m_currentTrackIndex = index;
+    mediaPlayer->setSource(QUrl::fromLocalFile(playlist.at(index)));
+    mediaPlayer->play();
+    m_isPlaying = true;
+    emit currentTrackIndexChanged();
+    emit isPlayingChanged();
+    qDebug() << "Playing track at index" << index << ":" << playlist.at(index);
 }
 
 void MusicPlayer::scanMusicDirectory()
@@ -64,6 +93,7 @@ void MusicPlayer::loadMusicIntoPlayer()
     }
 
     // For simplicity, play the first track in the playlist
+    m_currentTrackIndex = 0;
     QString firstTrack = playlist.first();
     mediaPlayer->setSource(QUrl::fromLocalFile(firstTrack));
 }
@@ -85,6 +115,7 @@ void MusicPlayer::updateMetaData()
     qDebug() << "Updating metadata" << mediaPlayer->mediaStatus();
     if (mediaPlayer->mediaStatus() == QMediaPlayer::LoadedMedia) {
         auto metaData = mediaPlayer->metaData();
+        qDebug() << "Metadata:" << metaData;
         m_musicTitle = metaData.stringValue(QMediaMetaData::Title);
         m_singerName = metaData.stringValue(QMediaMetaData::ContributingArtist);
         m_albumArt = metaData.value(QMediaMetaData::ThumbnailImage).value<QImage>();
@@ -111,6 +142,11 @@ QString MusicPlayer::singerName() const
     return m_singerName;
 }
 
+int MusicPlayer::currentTrackIndex() const
+{
+    return m_currentTrackIndex;
+}
+
 float MusicPlayer::progress() const
 {
     return m_progress;
@@ -127,4 +163,18 @@ void MusicPlayer::setAlbumArt(const QImage &newAlbumArt)
         return;
     m_albumArt = newAlbumArt;
     emit albumArtChanged();
+}
+
+QString MusicPlayer::thumbailSource() const
+{
+    if (m_albumArt.isNull())
+        return "";
+    
+    // Convert QImage to base64 data URL
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    buffer.open(QIODevice::WriteOnly);
+    m_albumArt.save(&buffer, "PNG");
+    QString base64 = QString::fromLatin1(byteArray.toBase64());
+    return "data:image/png;base64," + base64;
 }

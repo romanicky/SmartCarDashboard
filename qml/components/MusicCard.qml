@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 import QtMultimedia
+import MusicPlayerlib 1.0
 import "../themes"
 
 Rectangle {
@@ -35,42 +36,47 @@ Rectangle {
     signal search
     signal collapse
 
-    ListModel {
-        id: playlist
-        ListElement {
-            title: "Luon Yeu Doi"
-            artist: "Den"
-            album: "Singles"
-            source: "qrc:/asset/musics/LuonYeuDoi-Den-8692742.mp3"
-        }
-        ListElement {
-            title: "Muon Ngan Giac Mo"
-            artist: "Kha"
-            album: "Singles"
-            source: "qrc:/asset/musics/MuonNganGiacMo-Kha-35861436.mp3"
-        }
-        ListElement {
-            title: "Thuc Giac"
-            artist: "Da LAB"
-            album: "Singles"
-            source: "qrc:/asset/musics/ThucGiac-DaLAB-7048212.mp3"
-        }
-        ListElement {
-            title: "Tung Ngay Yeu Em (Acoustic)"
-            artist: "Bui Truong Linh"
-            album: "Acoustic"
-            source: "qrc:/asset/musics/TungNgayYeuEmAcoustic-buitruonglinh-16952808.mp3"
-        }
-        ListElement {
-            title: "Instrumental"
-            artist: "Unknown"
-            album: "Sample"
-            source: "qrc:/asset/musics/przwye8p0e.mp3"
-        }
+    MusicPlayer  {
+        id: musicPlayer
     }
 
+
+    // ListModel {
+    //     id: playlist
+    //     ListElement {
+    //         title: "Luon Yeu Doi"
+    //         artist: "Den"
+    //         album: "Singles"
+    //         source: "qrc:/asset/musics/LuonYeuDoi-Den-8692742.mp3"
+    //     }
+    //     ListElement {
+    //         title: "Muon Ngan Giac Mo"
+    //         artist: "Kha"
+    //         album: "Singles"
+    //         source: "qrc:/asset/musics/MuonNganGiacMo-Kha-35861436.mp3"
+    //     }
+    //     ListElement {
+    //         title: "Thuc Giac"
+    //         artist: "Da LAB"
+    //         album: "Singles"
+    //         source: "qrc:/asset/musics/ThucGiac-DaLAB-7048212.mp3"
+    //     }
+    //     ListElement {
+    //         title: "Tung Ngay Yeu Em (Acoustic)"
+    //         artist: "Bui Truong Linh"
+    //         album: "Acoustic"
+    //         source: "qrc:/asset/musics/TungNgayYeuEmAcoustic-buitruonglinh-16952808.mp3"
+    //     }
+    //     ListElement {
+    //         title: "Instrumental"
+    //         artist: "Unknown"
+    //         album: "Sample"
+    //         source: "qrc:/asset/musics/przwye8p0e.mp3"
+    //     }
+    // }
+
     MediaPlayer {
-        id: musicPlayer
+        // id: musicPlayer
         audioOutput: AudioOutput {
             id: audioOutput
         }
@@ -142,7 +148,7 @@ Rectangle {
                 fillMode: Image.Stretch
                 smooth: true
                 anchors.fill: parent
-                source: musicCard.currentTrack && musicCard.currentTrack.cover ? musicCard.currentTrack.cover : "../../asset/images/album_cover.png"
+                source: musicPlayer.thumbailSource || musicCard.coverSource
             }
         }
 
@@ -152,7 +158,7 @@ Rectangle {
             spacing: 6
 
             Text {
-                text: musicCard.currentTrack ? musicCard.currentTrack.title : musicCard.title
+                text: musicPlayer.musicTitle
                 color: Theme.colors.textMain
                 font.pixelSize: 26
                 font.bold: true
@@ -161,7 +167,7 @@ Rectangle {
             }
 
             Text {
-                text: musicCard.currentTrack ? musicCard.currentTrack.artist : musicCard.artist
+                text: musicPlayer.singerName
                 color: Theme.colors.textMain
                 font.pixelSize: 18
                 elide: Text.ElideRight
@@ -209,18 +215,26 @@ Rectangle {
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.playPreviousTrack()
+                background: Rectangle {
+                    color: Theme.colors.buttonBackground
+                    radius: 6
+                }
+                onClicked: musicPlayer.previousTrack()
             }
 
             ToolButton {
                 id: playMusic
-                icon.source: musicCard.playing ? "../../asset/icons/pause.svg" : "../../asset/icons/play.svg"
+                icon.source: musicPlayer.isPlaying ? "../../asset/icons/pause.svg" : "../../asset/icons/play.svg"
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-
+                background: Rectangle {
+                    color: Theme.colors.buttonBackground
+                    radius: 6
+                }
                 onClicked: {
-                    musicCard.playPause();
+                    // musicCard.playPause();
+                    musicPlayer.playMusic()
                 }
             }
 
@@ -230,7 +244,11 @@ Rectangle {
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.playNextTrack()
+                background: Rectangle {
+                    color: Theme.colors.buttonBackground
+                    radius: 6
+                }
+                onClicked: musicPlayer.nextTrack()
             }
         }
 
@@ -245,6 +263,10 @@ Rectangle {
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
+                background: Rectangle {
+                    color: Theme.colors.buttonBackground
+                    radius: 6
+                }
                 onClicked: musicCard.search()
             }
 
@@ -254,6 +276,10 @@ Rectangle {
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
+                background: Rectangle {
+                    color: Theme.colors.buttonBackground
+                    radius: 6
+                }
                 onClicked: musicCard.collapse()
             }
         }
