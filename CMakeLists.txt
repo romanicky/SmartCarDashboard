@@ -5,7 +5,7 @@ project(SmartCarDashboard VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Network Location Positioning)
+find_package(Qt6 REQUIRED COMPONENTS Quick Network Location Positioning Multimedia)
 
 qt_standard_project_setup(REQUIRES 6.8)
 
@@ -44,9 +44,18 @@ qt_add_qml_module(appSmartCarDashboard
     asset/icons/pause.svg
     asset/icons/prev.svg
     asset/icons/next.svg
-    RESOURCES asset/wea/6h_8h.png asset/wea/8h_15h.png asset/wea/15h_18h.png asset/wea/18h_6h.png asset/wea/cloud.png asset/wea/rain.png
-    RESOURCES asset/wea/cloudy.png asset/wea/moon.png asset/wea/rainicon.png asset/wea/sun.png
 
+    asset/wea/6h_8h.png
+    asset/wea/8h_15h.png
+    asset/wea/15h_18h.png
+    asset/wea/18h_6h.png
+    asset/wea/cloud.png
+    asset/wea/rain.png
+    asset/wea/cloudy.png
+    asset/wea/moon.png
+    asset/wea/rainicon.png
+    asset/wea/sun.png
+    SOURCES musicplayer.h musicplayer.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -62,7 +71,7 @@ set_target_properties(appSmartCarDashboard PROPERTIES
 )
 
 target_link_libraries(appSmartCarDashboard
-    PRIVATE Qt6::Quick Qt6::Network Qt6::Location Qt6::Positioning
+    PRIVATE Qt6::Quick Qt6::Network Qt6::Location Qt6::Positioning Qt6::Multimedia
 )
 
 include(GNUInstallDirs)

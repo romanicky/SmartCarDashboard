@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
+import QtMultimedia
 import "../themes"
 
 Rectangle {
@@ -19,6 +20,10 @@ Rectangle {
     property int position: 0        // seconds
     property int duration: 123      // seconds
 
+    // Playlist
+    property int currentIndex: 0
+    readonly property var currentTrack: playlist.count > 0 ? playlist.get(currentIndex) : null
+
     // Allow changing expand menu icon color externally
     property color expandMenuColor: Theme.colors.textMain
     property int iconSize: 20
@@ -29,6 +34,87 @@ Rectangle {
     signal previous
     signal search
     signal collapse
+
+    ListModel {
+        id: playlist
+        ListElement {
+            title: "Luon Yeu Doi"
+            artist: "Den"
+            album: "Singles"
+            source: "qrc:/asset/musics/LuonYeuDoi-Den-8692742.mp3"
+        }
+        ListElement {
+            title: "Muon Ngan Giac Mo"
+            artist: "Kha"
+            album: "Singles"
+            source: "qrc:/asset/musics/MuonNganGiacMo-Kha-35861436.mp3"
+        }
+        ListElement {
+            title: "Thuc Giac"
+            artist: "Da LAB"
+            album: "Singles"
+            source: "qrc:/asset/musics/ThucGiac-DaLAB-7048212.mp3"
+        }
+        ListElement {
+            title: "Tung Ngay Yeu Em (Acoustic)"
+            artist: "Bui Truong Linh"
+            album: "Acoustic"
+            source: "qrc:/asset/musics/TungNgayYeuEmAcoustic-buitruonglinh-16952808.mp3"
+        }
+        ListElement {
+            title: "Instrumental"
+            artist: "Unknown"
+            album: "Sample"
+            source: "qrc:/asset/musics/przwye8p0e.mp3"
+        }
+    }
+
+    MediaPlayer {
+        id: musicPlayer
+        audioOutput: AudioOutput {
+            id: audioOutput
+        }
+        source: musicCard.currentTrack ? musicCard.currentTrack.source : ""
+
+        onPlaybackStateChanged: musicCard.playing = (playbackState === MediaPlayer.PlayingState)
+        onPositionChanged: musicCard.position = Math.floor(position / 1000)
+        onDurationChanged: musicCard.duration = Math.max(1, Math.floor(duration / 1000))
+    }
+
+    function playCurrent() {
+        if (playlist.count === 0)
+            return;
+        musicPlayer.source = musicCard.currentTrack.source;
+        musicPlayer.play();
+    }
+
+    function playPause() {
+        if (playlist.count === 0)
+            return;
+        if (musicPlayer.source === "")
+            musicPlayer.source = musicCard.currentTrack.source;
+
+        if (musicPlayer.playbackState === MediaPlayer.PlayingState)
+            musicPlayer.pause();
+        else
+            musicPlayer.play();
+    }
+
+    function playNextTrack() {
+        if (playlist.count === 0)
+            return;
+        musicCard.currentIndex = (musicCard.currentIndex + 1) % playlist.count;
+        musicCard.position = 0;
+        playCurrent();
+    }
+
+    function playPreviousTrack() {
+        if (playlist.count === 0)
+            return;
+        musicCard.currentIndex = (musicCard.currentIndex - 1 + playlist.count) % playlist.count;
+        musicCard.position = 0;
+        playCurrent();
+    }
 
     function formatTime(seconds) {
         var s = Math.max(0, Math.floor(seconds));
@@ -56,7 +142,7 @@ Rectangle {
                 fillMode: Image.Stretch
                 smooth: true
                 anchors.fill: parent
-                source: "../../asset/images/album_cover.png"
+                source: musicCard.currentTrack && musicCard.currentTrack.cover ? musicCard.currentTrack.cover : "../../asset/images/album_cover.png"
             }
         }
 
@@ -66,7 +152,7 @@ Rectangle {
             spacing: 6
 
             Text {
-                text: musicCard.title
+                text: musicCard.currentTrack ? musicCard.currentTrack.title : musicCard.title
                 color: Theme.colors.textMain
                 font.pixelSize: 26
                 font.bold: true
@@ -75,7 +161,7 @@ Rectangle {
             }
 
             Text {
-                text: musicCard.artist
+                text: musicCard.currentTrack ? musicCard.currentTrack.artist : musicCard.artist
                 color: Theme.colors.textMain
                 font.pixelSize: 18
                 elide: Text.ElideRight
@@ -87,7 +173,7 @@ Rectangle {
                 spacing: 12
 
                 Text {
-                    text: musicCard.album
+                    text: musicCard.currentTrack ? musicCard.currentTrack.album : musicCard.album
                     color: Theme.colors.textSecondary
                     font.pixelSize: 16
                     elide: Text.ElideRight
@@ -123,7 +209,7 @@ Rectangle {
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.previous()
+                onClicked: musicCard.playPreviousTrack()
             }
 
             ToolButton {
@@ -134,11 +220,7 @@ Rectangle {
                 icon.height: musicCard.iconSize
 
                 onClicked: {
-                    if (musicCard.playing)
-                        musicCard.pause();
-                    else
-                        musicCard.play();
-                    musicCard.playing = !musicCard.playing;
+                    musicCard.playPause();
                 }
             }
 
@@ -148,7 +230,7 @@ Rectangle {
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.next()
+                onClicked: musicCard.playNextTrack()
             }
         }
 
