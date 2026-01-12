@@ -27,6 +27,8 @@
         <file>asset/icons/cloud.svg</file>
         <file>asset/icons/rainny.svg</file>
         <file>asset/icons/sunny.svg</file>
+        <file>asset/icons/moon.svg</file>
+        <file>qml/components/CameraCard.qml</file>
     </qresource>
     <qresource prefix="/wea"/>
     <qresource prefix="/WEATHER"/>

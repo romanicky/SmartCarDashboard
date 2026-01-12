@@ -34,6 +34,7 @@ qt_add_qml_module(appSmartCarDashboard
     qml/components/BottomBar.qml
     qml/components/StatItem.qml
     qml/components/GearButton.qml
+    qml/components/CameraCard.qml
 
     asset/images/car_left.svg
     asset/images/car_left.png
@@ -47,6 +48,7 @@ qt_add_qml_module(appSmartCarDashboard
     asset/icons/sunny.svg
     asset/icons/cloud.svg
     asset/icons/rainny.svg
+    asset/icons/moon.svg
 
     asset/wea/6h_8h.png
     asset/wea/8h_15h.png
@@ -69,6 +71,7 @@ set_target_properties(appSmartCarDashboard PROPERTIES
     # MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appSmartCarDashboard
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )

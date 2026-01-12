@@ -29,7 +29,6 @@ public:
     Q_PROPERTY(int currentTrackIndex READ currentTrackIndex NOTIFY currentTrackIndexChanged)
     Q_PROPERTY(qint64 position READ position WRITE setPosition NOTIFY positionChanged)
     Q_PROPERTY(qint64 duration READ duration NOTIFY durationChanged)
-    // progress
     Q_PROPERTY(float progress READ progress NOTIFY progressChanged)
     Q_PROPERTY(QImage albumArt READ albumArt WRITE setAlbumArt NOTIFY albumArtChanged FINAL)
     Q_PROPERTY(QString thumbailSource READ thumbailSource NOTIFY albumArtChanged)
@@ -81,7 +80,7 @@ private:
 
     QString m_singerName;
 
-    QString m_albumTitle;
+    QString m_albumTitle; // album metadata title
 
     float m_progress;
 

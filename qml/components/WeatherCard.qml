@@ -20,16 +20,16 @@ Rectangle {
 
     function iconweatherChanged(weatherCondition, currentHour) {
         if (weatherCondition === "Rain") {
-            return "../../asset/wea/rainicon.png";
+            return "../../asset/icons/rainny.svg";
         }
         if (weatherCondition === "Cloudy") {
-            return "../../asset/wea/cloudy.png";
+            return "../../asset/icons/cloudy.svg";
         }
         if (weatherCondition === "Clear") {
             if (currentHour >= 6 && currentHour <= 18) {
-                return "../../asset/wea/sun.png";
+                return "../../asset/icons/sunny.svg";
             } else {
-                return "../../asset/wea/moon.png";
+                return "../../asset/icons/moon.svg";
             }
         }
     }

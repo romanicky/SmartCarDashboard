@@ -127,11 +127,9 @@ void MusicPlayer::updateReadyPlayStatus()
 
 void MusicPlayer::updateMetaData()
 {
-    qDebug() << "Updating metadata" << mediaPlayer->mediaStatus();
     if (mediaPlayer->mediaStatus() == QMediaPlayer::LoadedMedia)
     {
         auto metaData = mediaPlayer->metaData();
-        qDebug() << "Metadata:" << metaData;
         m_musicTitle = metaData.stringValue(QMediaMetaData::Title);
         m_singerName = metaData.stringValue(QMediaMetaData::ContributingArtist);
         m_albumTitle = metaData.stringValue(QMediaMetaData::AlbumTitle);

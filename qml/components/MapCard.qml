@@ -50,11 +50,6 @@ Rectangle {
                 activeMapType = supportedMapTypes[0];
         }
 
-        // onStatusChanged: {
-        //     if (status === Map.Error)
-        //         console.log("Map error:", errorString);
-        // }
-
         // Optional: Add a marker at center
         MapQuickItem {
             coordinate: map.center
