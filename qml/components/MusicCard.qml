@@ -142,13 +142,14 @@ Rectangle {
                 }
             }
 
+
             ToolButton {
                 id: nextMusic
                 icon.source: "../../asset/icons/next.svg"
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.next()
+                onClicked: musicCard.next
             }
         }
 

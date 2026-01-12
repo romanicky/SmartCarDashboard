@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource prefix="/Music">
         <file>asset/images/car_left.svg</file>
         <file>asset/images/car_left.png</file>
         <file>asset/images/album_cover.png</file>
@@ -19,6 +19,11 @@
         <file>asset/wea/moon.png</file>
         <file>asset/wea/rainicon.png</file>
         <file>asset/wea/sun.png</file>
+        <file>asset/Music/LuonYeuDoi-Den-8692742.mp3</file>
+        <file>asset/Music/MuonNganGiacMo-Kha-35861436.mp3</file>
+        <file>asset/Music/przwye8p0e.mp3</file>
+        <file>asset/Music/ThucGiac-DaLAB-7048212.mp3</file>
+        <file>asset/Music/TungNgayYeuEmAcoustic-buitruonglinh-16952808.mp3</file>
     </qresource>
     <qresource prefix="/wea"/>
     <qresource prefix="/WEATHER"/>
