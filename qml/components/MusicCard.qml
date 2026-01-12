@@ -178,7 +178,7 @@ Rectangle {
                 spacing: 12
 
                 Text {
-                    text: musicCard.currentTrack ? musicCard.currentTrack.album : musicCard.album
+                    text: musicPlayer.albumTitle || musicCard.album
                     color: Theme.colors.textSecondary
                     font.pixelSize: 16
                     elide: Text.ElideRight
@@ -187,7 +187,7 @@ Rectangle {
 
                 // Remaining time (negative like in screenshot)
                 Text {
-                    text: "-" + formatTime(musicCard.duration - musicCard.position)
+                    text: "-" + formatTime(musicPlayer.duration / 1000 - musicPlayer.position / 1000)
                     color: Theme.colors.textSecondary
                     font.pixelSize: 16
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -197,9 +197,17 @@ Rectangle {
             ProgressBar {
                 id: progress
                 from: 0
-                to: Math.max(1, musicCard.duration)
-                value: Math.min(musicCard.duration, Math.max(0, musicCard.position))
+                to: Math.max(1, musicPlayer.duration / 1000)
+                value: Math.min(musicPlayer.duration / 1000, Math.max(0, musicPlayer.position / 1000))
                 Layout.fillWidth: true
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        var newPosition = (mouse.x / width) * musicPlayer.duration;
+                        musicPlayer.seek(newPosition);
+                    }
+                }
             }
         }
 

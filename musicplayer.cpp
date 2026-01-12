@@ -13,6 +13,16 @@ MusicPlayer::MusicPlayer(QObject *parent)
             this, &MusicPlayer::updateReadyPlayStatus);
     connect(mediaPlayer, &QMediaPlayer::mediaStatusChanged,
             this, &MusicPlayer::updateMetaData);
+    connect(mediaPlayer, &QMediaPlayer::positionChanged,
+            this, [this](qint64 position)
+            {
+        m_position = position;
+        emit positionChanged(); });
+    connect(mediaPlayer, &QMediaPlayer::durationChanged,
+            this, [this](qint64 duration)
+            {
+        m_duration = duration;
+        emit durationChanged(); });
     scanMusicDirectory();
 }
 
@@ -124,11 +134,13 @@ void MusicPlayer::updateMetaData()
         qDebug() << "Metadata:" << metaData;
         m_musicTitle = metaData.stringValue(QMediaMetaData::Title);
         m_singerName = metaData.stringValue(QMediaMetaData::ContributingArtist);
+        m_albumTitle = metaData.stringValue(QMediaMetaData::AlbumTitle);
         m_albumArt = metaData.value(QMediaMetaData::ThumbnailImage).value<QImage>();
 
         emit albumArtChanged();
         emit musicTitleChanged();
         emit singerNameChanged();
+        emit albumTitleChanged();
     }
 }
 
@@ -145,6 +157,11 @@ QString MusicPlayer::musicTitle() const
 QString MusicPlayer::singerName() const
 {
     return m_singerName;
+}
+
+QString MusicPlayer::albumTitle() const
+{
+    return m_albumTitle;
 }
 
 int MusicPlayer::currentTrackIndex() const
@@ -182,4 +199,28 @@ QString MusicPlayer::thumbailSource() const
     m_albumArt.save(&buffer, "PNG");
     QString base64 = QString::fromLatin1(byteArray.toBase64());
     return "data:image/png;base64," + base64;
+}
+
+qint64 MusicPlayer::position() const
+{
+    return m_position;
+}
+
+void MusicPlayer::setPosition(qint64 pos)
+{
+    if (m_position == pos)
+        return;
+    m_position = pos;
+    mediaPlayer->setPosition(pos);
+    emit positionChanged();
+}
+
+qint64 MusicPlayer::duration() const
+{
+    return m_duration;
+}
+
+void MusicPlayer::seek(qint64 position)
+{
+    mediaPlayer->setPosition(position);
 }

@@ -24,6 +24,9 @@
         <file>asset/wea/moon.png</file>
         <file>asset/wea/rainicon.png</file>
         <file>asset/wea/sun.png</file>
+        <file>asset/icons/cloud.svg</file>
+        <file>asset/icons/rainny.svg</file>
+        <file>asset/icons/sunny.svg</file>
     </qresource>
     <qresource prefix="/wea"/>
     <qresource prefix="/WEATHER"/>

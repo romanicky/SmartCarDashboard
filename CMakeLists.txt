@@ -44,6 +44,9 @@ qt_add_qml_module(appSmartCarDashboard
     asset/icons/pause.svg
     asset/icons/prev.svg
     asset/icons/next.svg
+    asset/icons/sunny.svg
+    asset/icons/cloud.svg
+    asset/icons/rainny.svg
 
     asset/wea/6h_8h.png
     asset/wea/8h_15h.png

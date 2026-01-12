@@ -25,7 +25,10 @@ public:
     Q_PROPERTY(bool isPlaying READ isPlaying NOTIFY isPlayingChanged)
     Q_PROPERTY(QString musicTitle READ musicTitle NOTIFY musicTitleChanged)
     Q_PROPERTY(QString singerName READ singerName NOTIFY singerNameChanged)
+    Q_PROPERTY(QString albumTitle READ albumTitle NOTIFY albumTitleChanged)
     Q_PROPERTY(int currentTrackIndex READ currentTrackIndex NOTIFY currentTrackIndexChanged)
+    Q_PROPERTY(qint64 position READ position WRITE setPosition NOTIFY positionChanged)
+    Q_PROPERTY(qint64 duration READ duration NOTIFY durationChanged)
     // progress
     Q_PROPERTY(float progress READ progress NOTIFY progressChanged)
     Q_PROPERTY(QImage albumArt READ albumArt WRITE setAlbumArt NOTIFY albumArtChanged FINAL)
@@ -42,7 +45,16 @@ public:
 
     QString singerName() const;
 
+    QString albumTitle() const;
+
     int currentTrackIndex() const;
+
+    qint64 position() const;
+    void setPosition(qint64 pos);
+
+    qint64 duration() const;
+
+    Q_INVOKABLE void seek(qint64 position);
 
     float progress() const;
 
@@ -69,7 +81,12 @@ private:
 
     QString m_singerName;
 
+    QString m_albumTitle;
+
     float m_progress;
+
+    qint64 m_position = 0;
+    qint64 m_duration = 0;
 
     QImage m_albumArt;
 
@@ -84,7 +101,10 @@ signals:
     void isPlayingChanged();
     void musicTitleChanged();
     void singerNameChanged();
+    void albumTitleChanged();
     void currentTrackIndexChanged();
+    void positionChanged();
+    void durationChanged();
     void progressChanged();
     void albumArtChanged();
 };
