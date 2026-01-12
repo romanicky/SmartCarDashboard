@@ -36,10 +36,9 @@ Rectangle {
     signal search
     signal collapse
 
-    MusicPlayer  {
+    MusicPlayer {
         id: musicPlayer
     }
-
 
     // ListModel {
     //     id: playlist
@@ -234,7 +233,7 @@ Rectangle {
                 }
                 onClicked: {
                     // musicCard.playPause();
-                    musicPlayer.playMusic()
+                    musicPlayer.playMusic();
                 }
             }
 

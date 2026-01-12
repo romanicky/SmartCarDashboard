@@ -31,7 +31,8 @@ public:
     Q_PROPERTY(QImage albumArt READ albumArt WRITE setAlbumArt NOTIFY albumArtChanged FINAL)
     Q_PROPERTY(QString thumbailSource READ thumbailSource NOTIFY albumArtChanged)
 
-    bool readyPlay() const {
+    bool readyPlay() const
+    {
         return mediaPlayer->mediaStatus() == QMediaPlayer::LoadedMedia;
     }
 
@@ -52,8 +53,8 @@ public:
 
 private:
     QString musicDirectory = QDir::homePath() + "/Downloads/resource/Music";
-    QMediaPlayer* mediaPlayer;
-    QAudioOutput* audioOutput;
+    QMediaPlayer *mediaPlayer;
+    QAudioOutput *audioOutput;
     QStringList playlist;
     int m_currentTrackIndex = -1;
 

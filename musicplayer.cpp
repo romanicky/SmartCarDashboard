@@ -16,14 +16,16 @@ MusicPlayer::MusicPlayer(QObject *parent)
     scanMusicDirectory();
 }
 
-MusicPlayer::~MusicPlayer() {
+MusicPlayer::~MusicPlayer()
+{
     delete mediaPlayer;
     delete audioOutput;
 }
 
 void MusicPlayer::playMusic()
 {
-    switch (mediaPlayer->playbackState()) {
+    switch (mediaPlayer->playbackState())
+    {
     case QMediaPlayer::StoppedState:
     case QMediaPlayer::PausedState:
         mediaPlayer->play();
@@ -78,7 +80,8 @@ void MusicPlayer::scanMusicDirectory()
     QFileInfoList fileList = dir.entryInfoList(nameFilters, QDir::Files);
 
     playlist.clear();
-    for (const QFileInfo &fileInfo : fileList) {
+    for (const QFileInfo &fileInfo : fileList)
+    {
         playlist.append(fileInfo.absoluteFilePath());
     }
 
@@ -87,7 +90,8 @@ void MusicPlayer::scanMusicDirectory()
 
 void MusicPlayer::loadMusicIntoPlayer()
 {
-    if (playlist.isEmpty()) {
+    if (playlist.isEmpty())
+    {
         qWarning() << "No music files found in directory:" << musicDirectory;
         return;
     }
@@ -100,7 +104,8 @@ void MusicPlayer::loadMusicIntoPlayer()
 
 void MusicPlayer::updateReadyPlayStatus()
 {
-    switch (mediaPlayer->mediaStatus()) {
+    switch (mediaPlayer->mediaStatus())
+    {
     case QMediaPlayer::LoadedMedia:
         m_isPlaying = true;
         emit readyPlayChanged();
@@ -113,13 +118,13 @@ void MusicPlayer::updateReadyPlayStatus()
 void MusicPlayer::updateMetaData()
 {
     qDebug() << "Updating metadata" << mediaPlayer->mediaStatus();
-    if (mediaPlayer->mediaStatus() == QMediaPlayer::LoadedMedia) {
+    if (mediaPlayer->mediaStatus() == QMediaPlayer::LoadedMedia)
+    {
         auto metaData = mediaPlayer->metaData();
         qDebug() << "Metadata:" << metaData;
         m_musicTitle = metaData.stringValue(QMediaMetaData::Title);
         m_singerName = metaData.stringValue(QMediaMetaData::ContributingArtist);
         m_albumArt = metaData.value(QMediaMetaData::ThumbnailImage).value<QImage>();
-
 
         emit albumArtChanged();
         emit musicTitleChanged();
@@ -169,7 +174,7 @@ QString MusicPlayer::thumbailSource() const
 {
     if (m_albumArt.isNull())
         return "";
-    
+
     // Convert QImage to base64 data URL
     QByteArray byteArray;
     QBuffer buffer(&byteArray);
