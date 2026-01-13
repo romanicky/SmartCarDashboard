@@ -44,8 +44,11 @@ qt_add_qml_module(appSmartCarDashboard
     asset/icons/pause.svg
     asset/icons/prev.svg
     asset/icons/next.svg
-    RESOURCES asset/wea/6h_8h.png asset/wea/8h_15h.png asset/wea/15h_18h.png asset/wea/18h_6h.png asset/wea/cloud.png asset/wea/rain.png
-    RESOURCES asset/wea/cloudy.png asset/wea/moon.png asset/wea/rainicon.png asset/wea/sun.png
+    RESOURCES asset/wea/6-8h.svg asset/wea/8h-15h.svg asset/wea/15h-18h.svg asset/wea/15h-18hv2.svg asset/wea/18h-6h.svg asset/wea/cloudy.svg asset/wea/cloudyicon.svg asset/wea/nightcloudicon.svg
+    asset/wea/rainheavyicon.svg asset/wea/rainicon.svg asset/wea/rainlighticon.svg asset/wea/rainmode.svg  asset/wea/sunny.svg asset/wea/sunnycloudicon.svg asset/wea/suongmuicon.svg asset/wea/thunderstorm.svg
+    RESOURCES asset/wea/stormicon.svg
+    RESOURCES asset/wea/moonlighticon.svg asset/wea/nightclearicon.svg
+    RESOURCES asset/wea/hatmuaicon.svg
 
 )
 
