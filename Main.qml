@@ -33,9 +33,20 @@ Window {
                 Layout.fillHeight: true
             }
 
-            MapCard {
+            Loader {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+                sourceComponent: CarInfo.gear === "R" ? cameraComponent : mapComponent
+
+                Component {
+                    id: mapComponent
+                    MapCard {}
+                }
+
+                Component {
+                    id: cameraComponent
+                    CameraCard {}
+                }
             }
 
             WeatherCard {

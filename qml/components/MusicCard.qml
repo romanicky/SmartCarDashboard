@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
+import QtMultimedia
+import MusicPlayerlib 1.0
 import "../themes"
 
 Rectangle {
@@ -19,6 +21,10 @@ Rectangle {
     property int position: 0        // seconds
     property int duration: 123      // seconds
 
+    // Playlist
+    property int currentIndex: 0
+    readonly property var currentTrack: playlist.count > 0 ? playlist.get(currentIndex) : null
+
     // Allow changing expand menu icon color externally
     property color expandMenuColor: Theme.colors.textMain
     property int iconSize: 20
@@ -29,6 +35,10 @@ Rectangle {
     signal previous
     signal search
     signal collapse
+
+    MusicPlayer {
+        id: musicPlayer
+    }
 
     function formatTime(seconds) {
         var s = Math.max(0, Math.floor(seconds));
@@ -56,7 +66,7 @@ Rectangle {
                 fillMode: Image.Stretch
                 smooth: true
                 anchors.fill: parent
-                source: "../../asset/images/album_cover.png"
+                source: musicPlayer.thumbailSource || musicCard.coverSource
             }
         }
 
@@ -66,7 +76,7 @@ Rectangle {
             spacing: 6
 
             Text {
-                text: musicCard.title
+                text: musicPlayer.musicTitle
                 color: Theme.colors.textMain
                 font.pixelSize: 26
                 font.bold: true
@@ -75,7 +85,7 @@ Rectangle {
             }
 
             Text {
-                text: musicCard.artist
+                text: musicPlayer.singerName
                 color: Theme.colors.textMain
                 font.pixelSize: 18
                 elide: Text.ElideRight
@@ -87,7 +97,7 @@ Rectangle {
                 spacing: 12
 
                 Text {
-                    text: musicCard.album
+                    text: musicPlayer.albumTitle || musicCard.album
                     color: Theme.colors.textSecondary
                     font.pixelSize: 16
                     elide: Text.ElideRight
@@ -96,7 +106,7 @@ Rectangle {
 
                 // Remaining time (negative like in screenshot)
                 Text {
-                    text: "-" + formatTime(musicCard.duration - musicCard.position)
+                    text: "-" + formatTime(musicPlayer.duration / 1000 - musicPlayer.position / 1000)
                     color: Theme.colors.textSecondary
                     font.pixelSize: 16
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -106,9 +116,17 @@ Rectangle {
             ProgressBar {
                 id: progress
                 from: 0
-                to: Math.max(1, musicCard.duration)
-                value: Math.min(musicCard.duration, Math.max(0, musicCard.position))
+                to: Math.max(1, musicPlayer.duration / 1000)
+                value: Math.min(musicPlayer.duration / 1000, Math.max(0, musicPlayer.position / 1000))
                 Layout.fillWidth: true
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        var newPosition = (mouse.x / width) * musicPlayer.duration;
+                        musicPlayer.seek(newPosition);
+                    }
+                }
             }
         }
 
@@ -123,22 +141,26 @@ Rectangle {
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.previous()
+                background: Rectangle {
+                    color: Theme.colors.buttonBackground
+                    radius: 6
+                }
+                onClicked: musicPlayer.previousTrack()
             }
 
             ToolButton {
                 id: playMusic
-                icon.source: musicCard.playing ? "../../asset/icons/pause.svg" : "../../asset/icons/play.svg"
+                icon.source: musicPlayer.isPlaying ? "../../asset/icons/pause.svg" : "../../asset/icons/play.svg"
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-
+                background: Rectangle {
+                    color: Theme.colors.buttonBackground
+                    radius: 6
+                }
                 onClicked: {
-                    if (musicCard.playing)
-                        musicCard.pause();
-                    else
-                        musicCard.play();
-                    musicCard.playing = !musicCard.playing;
+                    // musicCard.playPause();
+                    musicPlayer.playMusic();
                 }
             }
 
@@ -148,7 +170,11 @@ Rectangle {
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.next()
+                background: Rectangle {
+                    color: Theme.colors.buttonBackground
+                    radius: 6
+                }
+                onClicked: musicPlayer.nextTrack()
             }
         }
 
@@ -163,6 +189,10 @@ Rectangle {
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
+                background: Rectangle {
+                    color: Theme.colors.buttonBackground
+                    radius: 6
+                }
                 onClicked: musicCard.search()
             }
 
@@ -172,6 +202,10 @@ Rectangle {
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
+                background: Rectangle {
+                    color: Theme.colors.buttonBackground
+                    radius: 6
+                }
                 onClicked: musicCard.collapse()
             }
         }
