@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls 2.15
 import "../themes"
+import Musicplayer 1.0
 
 Rectangle {
     id: musicCard
@@ -10,23 +11,20 @@ Rectangle {
     radius: 15
     color: Theme.colors.card
 
-    property url coverSource: "qrc:/qt/qml/SmartCarDashboard/asset/images/album_cover.png"
-    property string title: "Mia & Sebastian's Theme"
-    property string artist: "Justin Hurwitz"
-    property string album: "La La Land (Original Motion Pi...)"
+    // Bind to backend properties
+    property var player: null  // Will be set from parent
 
-    property bool playing: false
-    property int position: 0        // seconds
-    property int duration: 123      // seconds
+    property url coverSource: player ? player.coverSource : "qrc:/qt/qml/SmartCarDashboard/asset/images/album_cover.png"
+    property string title: player ? player.title : "No Track"
+    property string artist: player ? player.artist : "Unknown"
+    property string album: player ? player.album : "Unknown"
+    property bool playing: player ? player.playing : false
+    property int position: player ? player.position : 0
+    property int duration: player ? player.duration : 0
 
-    // Allow changing expand menu icon color externally
     property color expandMenuColor: Theme.colors.textMain
     property int iconSize: 20
 
-    signal play
-    signal pause
-    signal next
-    signal previous
     signal search
     signal collapse
 
@@ -35,6 +33,10 @@ Rectangle {
         var m = Math.floor(s / 60);
         var r = s % 60;
         return (m < 10 ? "" + m : m) + ":" + (r < 10 ? "0" + r : r);
+    }
+
+    MusicPlayer {
+        id:musicPlayer
     }
 
     RowLayout {
@@ -53,10 +55,10 @@ Rectangle {
             Image {
                 id: cover
                 clip: true
-                fillMode: Image.Stretch
+                fillMode: Image.PreserveAspectCrop
                 smooth: true
                 anchors.fill: parent
-                source: "../../asset/images/album_cover.png"
+                source: musicPlayer.coverSource
             }
         }
 
@@ -66,7 +68,7 @@ Rectangle {
             spacing: 6
 
             Text {
-                text: musicCard.title
+                text: musicPlayer.musicTitle
                 color: Theme.colors.textMain
                 font.pixelSize: 26
                 font.bold: true
@@ -75,7 +77,7 @@ Rectangle {
             }
 
             Text {
-                text: musicCard.artist
+                text: musicPlayer.singerName
                 color: Theme.colors.textMain
                 font.pixelSize: 18
                 elide: Text.ElideRight
@@ -87,69 +89,68 @@ Rectangle {
                 spacing: 12
 
                 Text {
-                    text: musicCard.album
+                    text: musicPlayer.album
                     color: Theme.colors.textSecondary
                     font.pixelSize: 16
                     elide: Text.ElideRight
                     Layout.fillWidth: true
                 }
 
-                // Remaining time (negative like in screenshot)
                 Text {
-                    text: "-" + formatTime(musicCard.duration - musicCard.position)
+                    text: "-" + formatTime(musicPlayer.duration - musicPlayer.position)
                     color: Theme.colors.textSecondary
                     font.pixelSize: 16
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 }
             }
 
-            ProgressBar {
-                id: progress
+            Slider {
+                id: progressSlider
                 from: 0
-                to: Math.max(1, musicCard.duration)
-                value: Math.min(musicCard.duration, Math.max(0, musicCard.position))
+                to: Math.max(1, musicPlayer.duration)
+                value: musicPlayer.position
                 Layout.fillWidth: true
+
+                onMoved: {
+                    if (player)
+                        player.seek(value)
+                }
             }
         }
 
-        // Transport controls centered
+        // Transport controls
         RowLayout {
             spacing: 28
             Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
             ToolButton {
-                id: prevMusic
                 icon.source: "../../asset/icons/prev.svg"
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.previous()
+                onClicked: if (player) player.previous()
             }
 
             ToolButton {
-                id: playMusic
-                icon.source: musicCard.playing ? "../../asset/icons/pause.svg" : "../../asset/icons/play.svg"
+                icon.source: musicPlayer.playing ? "../../asset/icons/pause.svg" : "../../asset/icons/play.svg"
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-
                 onClicked: {
-                    if (musicCard.playing)
-                        musicCard.pause();
+                    if (!player) return;
+                    if (musicPlayer.playing)
+                        player.pause();
                     else
-                        musicCard.play();
-                    musicCard.playing = !musicCard.playing;
+                        player.play();
                 }
             }
 
-
             ToolButton {
-                id: nextMusic
                 icon.source: "../../asset/icons/next.svg"
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.next
+                onClicked: if (player) player.next()
             }
         }
 
@@ -159,21 +160,19 @@ Rectangle {
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 
             ToolButton {
-                id: searchMusic
                 icon.source: "../../asset/icons/search.svg"
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.search()
+                onClicked: musicPlayer.search()
             }
 
             ToolButton {
-                id: expandMenu
                 icon.source: "../../asset/icons/expand_music.svg"
                 icon.color: Theme.colors.textMain
                 icon.width: musicCard.iconSize
                 icon.height: musicCard.iconSize
-                onClicked: musicCard.collapse()
+                onClicked: musicPlayer.collapse()
             }
         }
     }

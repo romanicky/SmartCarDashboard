@@ -3,12 +3,15 @@
 #include <QQmlContext>
 #include "src/CarInfoModel.h"
 #include "src/CarDataReceiver.h"
+#include "musicplayer.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
     QQmlApplicationEngine engine;
+
+    qmlRegisterType<MusicPlayer>("Musicplayer", 1, 0, "MusicPlayer");
 
     auto *carInfo = new CarInfoModel(&app);
     carInfo->setVehicleName("Vinfast");
