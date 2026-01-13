@@ -29,6 +29,8 @@
         <file>asset/wea/moonlighticon.svg</file>
         <file>asset/wea/nightclearicon.svg</file>
         <file>asset/wea/hatmuaicon.svg</file>
+        <file>asset/icons/left.svg</file>
+        <file>asset/icons/right.svg</file>
     </qresource>
     <qresource prefix="/wea"/>
     <qresource prefix="/WEATHER"/>

@@ -56,10 +56,16 @@ class CarSimulatorGUI:
 
     def toggle_left(self):
         self.left_signal = not self.left_signal
+        if self.left_signal:
+            self.right_signal = False
+            self.btn_right.config(bg="systemButtonFace")
         self.btn_left.config(bg="green" if self.left_signal else "systemButtonFace")
 
     def toggle_right(self):
         self.right_signal = not self.right_signal
+        if self.right_signal:
+            self.left_signal = False
+            self.btn_left.config(bg="systemButtonFace")
         self.btn_right.config(bg="green" if self.right_signal else "systemButtonFace")
 
     def select_gear(self, gear):
