@@ -9,12 +9,12 @@ RowLayout {
     spacing: 30
 
     Repeater {
-        model: ["Home", "Nav", "Car", "Menu"]
+        model: ["Home", "Nav", "Theme", "Menu"]
         Button {
             text: modelData
             implicitWidth: 60
             onClicked: {
-                if (modelData === "Car") {
+                if (modelData === "Theme") {
                     Theme.toggle();
                 }
             }

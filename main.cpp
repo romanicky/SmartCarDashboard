@@ -3,10 +3,13 @@
 #include <QQmlContext>
 #include "src/CarInfoModel.h"
 #include "src/CarDataReceiver.h"
+#include "musicplayer.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+
+    qmlRegisterType<MusicPlayer>("MusicPlayerlib", 1, 0, "MusicPlayer");
 
     QQmlApplicationEngine engine;
 

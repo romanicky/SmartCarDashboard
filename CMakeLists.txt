@@ -5,7 +5,7 @@ project(SmartCarDashboard VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Quick Network Location Positioning)
+find_package(Qt6 REQUIRED COMPONENTS Quick Network Location Positioning Multimedia)
 
 qt_standard_project_setup(REQUIRES 6.8)
 
@@ -34,6 +34,7 @@ qt_add_qml_module(appSmartCarDashboard
     qml/components/BottomBar.qml
     qml/components/StatItem.qml
     qml/components/GearButton.qml
+    qml/components/CameraCard.qml
 
     asset/images/car_left.svg
     asset/images/car_left.png
@@ -44,12 +45,22 @@ qt_add_qml_module(appSmartCarDashboard
     asset/icons/pause.svg
     asset/icons/prev.svg
     asset/icons/next.svg
-    RESOURCES asset/wea/6-8h.svg asset/wea/8h-15h.svg asset/wea/15h-18h.svg asset/wea/15h-18hv2.svg asset/wea/18h-6h.svg asset/wea/cloudy.svg asset/wea/cloudyicon.svg asset/wea/nightcloudicon.svg
-    asset/wea/rainheavyicon.svg asset/wea/rainicon.svg asset/wea/rainlighticon.svg asset/wea/rainmode.svg  asset/wea/sunny.svg asset/wea/sunnycloudicon.svg asset/wea/suongmuicon.svg asset/wea/thunderstorm.svg
-    RESOURCES asset/wea/stormicon.svg
-    RESOURCES asset/wea/moonlighticon.svg asset/wea/nightclearicon.svg
-    RESOURCES asset/wea/hatmuaicon.svg
+    asset/icons/sunny.svg
+    asset/icons/cloud.svg
+    asset/icons/rainny.svg
+    asset/icons/moon.svg
 
+    asset/wea/6h_8h.png
+    asset/wea/8h_15h.png
+    asset/wea/15h_18h.png
+    asset/wea/18h_6h.png
+    asset/wea/cloud.png
+    asset/wea/rain.png
+    asset/wea/cloudy.png
+    asset/wea/moon.png
+    asset/wea/rainicon.png
+    asset/wea/sun.png
+    SOURCES musicplayer.h musicplayer.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -60,12 +71,13 @@ set_target_properties(appSmartCarDashboard PROPERTIES
     # MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appSmartCarDashboard
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+    MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/Info.plist
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
 )
 
 target_link_libraries(appSmartCarDashboard
-    PRIVATE Qt6::Quick Qt6::Network Qt6::Location Qt6::Positioning
+    PRIVATE Qt6::Quick Qt6::Network Qt6::Location Qt6::Positioning Qt6::Multimedia
 )
 
 include(GNUInstallDirs)
