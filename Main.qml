@@ -10,6 +10,14 @@ Window {
     color: Theme.colors.background
     visible: true
 
+    // Timer to update theme based on current time (check every minute)
+    Timer {
+        interval: 1000 // Check every second
+        running: true
+        repeat: true
+        onTriggered: Theme.updateThemeBasedOnTime()
+    }
+
     ColumnLayout {
         anchors.fill: parent
         spacing: 15
@@ -33,9 +41,20 @@ Window {
                 Layout.fillHeight: true
             }
 
-            MapCard {
+            Loader {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+                sourceComponent: CarInfo.gear === "R" ? cameraComponent : mapComponent
+
+                Component {
+                    id: mapComponent
+                    MapCard {}
+                }
+
+                Component {
+                    id: cameraComponent
+                    CameraCard {}
+                }
             }
 
             WeatherCard {
@@ -55,6 +74,7 @@ Window {
     }
 
     Component.onCompleted: {
-        // console.log("Theme isDark:", Theme.isDark);
+        // Initialize theme based on current time
+        Theme.updateThemeBasedOnTime();
     }
 }
