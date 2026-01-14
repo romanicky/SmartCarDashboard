@@ -7,6 +7,8 @@ DashboardCard {
     implicitWidth: 480
     implicitHeight: 600
 
+    property color batteryColor: CarInfo.capacity >= 80 ? "#25CB55" : (CarInfo.capacity >= 56 ? "#FFA500" : (CarInfo.capacity >= 30 ? "#FFFF00" : "#FF0000"))
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 25
@@ -32,16 +34,50 @@ DashboardCard {
         }
 
         // 2. Battery Progress Bar
-        Rectangle {
-            Layout.fillWidth: true
-            height: 8
-            color: Theme.colors.card
-            radius: 4
+        ColumnLayout {
             Rectangle {
-                width: parent.width * 0.65 // Giả lập 65% pin
-                height: parent.height
-                color: Theme.colors.accent
-                radius: 4
+                Layout.fillWidth: true
+                Layout.preferredHeight: 5
+                color: "gray"
+                radius: 5
+
+                Rectangle {
+                    width: CarInfo.capacity / 100 * parent.width
+                    height: parent.height
+                    color: root.batteryColor
+                    radius: 5
+
+                    Behavior on color {
+                        ColorAnimation {
+                            duration: 1000
+                            easing.type: Easing.InOutQuad
+                        }
+                    }
+
+                    Behavior on width {
+                        NumberAnimation {
+                            duration: 300
+                            easing.type: Easing.OutQuad
+                        }
+                    }
+                }
+            }
+
+            RowLayout {
+                Text {
+                    id: rangeText
+                    text: Math.round(CarInfo.capacity * 5) + " KM"
+                    color: Theme.colors.textSecondary
+                    font.pixelSize: 14
+                }
+                Item {
+                    Layout.fillWidth: true
+                }
+                Text {
+                    text: Math.round(CarInfo.capacity) + "%"
+                    color: Theme.colors.textSecondary
+                    font.pixelSize: 14
+                }
             }
         }
 
@@ -52,18 +88,14 @@ DashboardCard {
 
             // Reusable Stat Component
             StatItem {
-                value: String(CarInfo.range)
+                value: Math.round(CarInfo.capacity * 5)
                 unit: "km"
                 label: "Remaining"
             }
-            StatItem {
-                value: String(CarInfo.average)
-                unit: "Wh/km"
-                label: "Average"
-            }
+
             StatItem {
                 value: String(CarInfo.capacity)
-                unit: "kWh"
+                unit: "%"
                 label: "Full Capacity"
             }
         }

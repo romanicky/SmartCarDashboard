@@ -14,6 +14,8 @@ class CarSimulatorGUI:
         self.speed = 0
         self.left_signal = False
         self.right_signal = False
+        self.headlights_on = False
+        self.capacity = 100.0
 
         # --- UI Components ---
         self.btn_add = tk.Button(root, text="+10 km/h", command=self.increase_speed)
@@ -28,6 +30,9 @@ class CarSimulatorGUI:
         
         self.btn_right = tk.Button(root, text="Right Signal", command=self.toggle_right)
         self.btn_right.pack(pady=5)
+
+        self.btn_headlights = tk.Button(root, text="Headlights", command=self.toggle_headlights)
+        self.btn_headlights.pack(pady=5)
 
         # Gear selector buttons (N D R P)
         gear_frame = tk.Frame(root)
@@ -46,6 +51,14 @@ class CarSimulatorGUI:
         self.server_thread = threading.Thread(target=self.start_server, daemon=True)
         self.server_thread.start()
 
+        # Start capacity drain timer
+        self.drain_capacity()
+
+    def drain_capacity(self):
+        if self.capacity > 0 and self.current_gear == "D" and self.speed > 0:
+            self.capacity = max(0, self.capacity - 1)
+        self.root.after(500, self.drain_capacity)
+
     def increase_speed(self):
         if self.current_gear in ["D", "R"]:
             self.speed = min(self.speed + 10, 200)
@@ -56,11 +69,21 @@ class CarSimulatorGUI:
 
     def toggle_left(self):
         self.left_signal = not self.left_signal
+        if self.left_signal:
+            self.right_signal = False
+            self.btn_right.config(bg="systemButtonFace")
         self.btn_left.config(bg="green" if self.left_signal else "systemButtonFace")
 
     def toggle_right(self):
         self.right_signal = not self.right_signal
+        if self.right_signal:
+            self.left_signal = False
+            self.btn_left.config(bg="systemButtonFace")
         self.btn_right.config(bg="green" if self.right_signal else "systemButtonFace")
+
+    def toggle_headlights(self):
+        self.headlights_on = not self.headlights_on
+        self.btn_headlights.config(bg="yellow" if self.headlights_on else "systemButtonFace")
 
     def select_gear(self, gear):
         self.current_gear = gear
@@ -85,7 +108,9 @@ class CarSimulatorGUI:
                         "speed": self.speed,
                         "leftSignal": self.left_signal,
                         "rightSignal": self.right_signal,
-                        "gear": self.current_gear
+                        "gear": self.current_gear,
+                        "headlightsOn": self.headlights_on,
+                        "capacity": self.capacity
                     }
                     conn.send((json.dumps(data) + "\n").encode())
                     time.sleep(0.1) # Gửi dữ liệu mỗi 100ms

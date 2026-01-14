@@ -67,3 +67,30 @@ void CarInfoModel::setGear(const QString &g)
     m_gear = g;
     emit gearChanged();
 }
+
+bool CarInfoModel::headlightsOn() const { return m_headlightsOn; }
+void CarInfoModel::setHeadlightsOn(bool on)
+{
+    if (m_headlightsOn == on)
+        return;
+    m_headlightsOn = on;
+    emit headlightsOnChanged();
+}
+
+bool CarInfoModel::leftSignal() const { return m_leftSignal; }
+void CarInfoModel::setLeftSignal(bool on)
+{
+    if (m_leftSignal == on)
+        return;
+    m_leftSignal = on;
+    emit leftSignalChanged();
+}
+
+bool CarInfoModel::rightSignal() const { return m_rightSignal; }
+void CarInfoModel::setRightSignal(bool on)
+{
+    if (m_rightSignal == on)
+        return;
+    m_rightSignal = on;
+    emit rightSignalChanged();
+}

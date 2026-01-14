@@ -14,6 +14,9 @@ class CarInfoModel : public QObject
     Q_PROPERTY(double capacity READ capacity WRITE setCapacity NOTIFY capacityChanged)
     Q_PROPERTY(QString imageSource READ imageSource WRITE setImageSource NOTIFY imageSourceChanged)
     Q_PROPERTY(QString gear READ gear WRITE setGear NOTIFY gearChanged)
+    Q_PROPERTY(bool headlightsOn READ headlightsOn WRITE setHeadlightsOn NOTIFY headlightsOnChanged)
+    Q_PROPERTY(bool leftSignal READ leftSignal WRITE setLeftSignal NOTIFY leftSignalChanged)
+    Q_PROPERTY(bool rightSignal READ rightSignal WRITE setRightSignal NOTIFY rightSignalChanged)
 
 public:
     explicit CarInfoModel(QObject *parent = nullptr);
@@ -39,6 +42,15 @@ public:
     QString gear() const;
     void setGear(const QString &g);
 
+    bool headlightsOn() const;
+    void setHeadlightsOn(bool on);
+
+    bool leftSignal() const;
+    void setLeftSignal(bool on);
+
+    bool rightSignal() const;
+    void setRightSignal(bool on);
+
 signals:
     void vehicleNameChanged();
     void speedChanged();
@@ -47,6 +59,9 @@ signals:
     void capacityChanged();
     void imageSourceChanged();
     void gearChanged();
+    void headlightsOnChanged();
+    void leftSignalChanged();
+    void rightSignalChanged();
 
 private:
     QString m_vehicleName;
@@ -56,6 +71,9 @@ private:
     double m_capacity = 0.0;
     QString m_imageSource;
     QString m_gear;
+    bool m_headlightsOn = false;
+    bool m_leftSignal = false;
+    bool m_rightSignal = false;
 };
 
 #endif
