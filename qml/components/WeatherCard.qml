@@ -9,46 +9,13 @@ Rectangle {
     border.color: Theme.colors.cardBorder
     radius: 15
     property int currentHour: new Date().getHours()
-    property string weatherCondition:"Storm"
-    property double presentTemp: 25
+    property string weatherCondition: CarInfo.weatherCondition || "Clear"
+    property double presentTemp: CarInfo.weatherTemperature || 25
 
-    function iconfutureCondition(hour){
-        let diff = (hour - currentHour + 24) % 24;
-        if(weatherCondition === "Storm" || weatherCondition === "ThunderStorm"){
-            if(diff === 1) return "Rain_Heavy";
-            if(diff === 2) return "Rain_Light";
+    Behavior on color {
+        ColorAnimation {
+            duration: 800
         }
-        return "Clear";
-    }
-
-    function iconweatherChanged(weatherCondition , currentHour){
-        let path = "../../asset/wea/";
-        // special weather
-        if(weatherCondition === "Rain_Light")
-            return path + "rainlighticon.svg";
-        if(weatherCondition === "Rain_Heavy")
-            return path + "rainheavyicon.svg";
-        if(weatherCondition === "Storm")
-            return path + "stormicon.svg";
-        if(weatherCondition === "ThunderStorm")
-            return path + "thunderstorm.svg";
-        if (weatherCondition === "Cloudy")
-            return path + "cloudyicon.svg";
-        //morning
-        if(currentHour >= 5 && currentHour < 7)
-            return path + "suongmuicon.svg"
-        if(currentHour >= 7 && currentHour < 9)
-            return path + "sunnycloudicon.svg";
-        if(currentHour >= 9 && currentHour < 15)
-            return path + "sunny.svg";
-        if(currentHour >= 15 && currentHour < 18)
-            return path + "sunnycloudicon.svg";
-        //night
-        if(currentHour >= 18 && currentHour < 21)
-            return path + "nightcloudicon.svg";
-        if(currentHour >= 21 && currentHour < 23)
-            return path + "nightclearicon.svg";
-        return path + "moonlighticon.svg";
     }
 
     function iconweatherChanged(weatherCondition, currentHour) {
@@ -89,9 +56,8 @@ Rectangle {
     function fu_1h_wea_background(currentHour) {
         return Theme.colors.card;
     }
-
-    function fu_1h_wea_background(currentHour){
-        return (currentHour >=6 && currentHour < 18 ) ? "#FFFFFF" : "#1C1F26"
+    function textcolor(currentHour) {
+        return Theme.colors.textMain;
     }
 
     function timeBasedBackgroundColor(currentHour) {
@@ -153,37 +119,10 @@ Rectangle {
                     opacityTimer.restart();
                 }
 
-                Emitter{
-                    id: startRainMode
-                    width: parent.width +600
-                    x: -300
-                    height: 10
-                    anchors.top: parent.top
-
-                    emitRate: (weatherCondition === "ThunderStorm") ? 250:
-                              (weatherCondition === "Storm") ? 200 :
-                              (weatherCondition ==="Rain_Heavy") ? 150 : 50
-
-                    lifeSpan: 2000
-
-                    velocity: AngleDirection{
-                        // case Storm: raindrops fall 70degree else raindrops fall 90degree
-                        angle: (weatherCondition === "ThunderStorm") ? 50:
-                               (weatherCondition === "Storm") ? 70 : 90
-                        angleVariation: 5
-
-                        //fall speed
-                        magnitude: (weatherCondition === "ThunderStorm") ? 200:
-                                    (weatherCondition === "Storm") ? 150 : 100
-                        magnitudeVariation: 100
-                    }
-                }
-                //WindMode On in case Storm
-                Wander{
-                    anchors.fill: parent
-                    enabled: weatherCondition === "Storm" || weatherCondition ==="ThunderStorm"
-                    xVariance: 150
-                    pace: 100
+                Timer {
+                    id: opacityTimer
+                    interval: 50
+                    onTriggered: backgroundWeather.opacity = 1.0
                 }
             }
 
@@ -235,8 +174,8 @@ Rectangle {
                                 color: weatherCard.textcolor(currentHour)
                                 Layout.alignment: Qt.AlignHCenter
                             }
-                            Image{
-                                source: weatherCard.iconweatherChanged(weatherCard.iconfutureCondition(futurehour),futurehour)
+                            Image {
+                                source: weatherCard.iconweatherChanged(weatherCondition, currentHour)
                                 Layout.preferredWidth: 45
                                 Layout.preferredHeight: 45
                                 fillMode: Image.PreserveAspectFit
