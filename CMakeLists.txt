@@ -20,7 +20,7 @@ qt_add_qml_module(appSmartCarDashboard
     QML_FILES
     Main.qml
 
-    rsc.qrc
+
     qml/themes/qmldir
     qml/themes/Theme.qml
     qml/themes/DarkTheme.qml
