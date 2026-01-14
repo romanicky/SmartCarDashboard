@@ -10,7 +10,7 @@ Item {
     readonly property QtObject colors: isDark ? dark : light
 
     function toggle() {
-        isDark = !isDark
+        isDark = !isDark;
     }
 
     function updateThemeBasedOnTime() {
