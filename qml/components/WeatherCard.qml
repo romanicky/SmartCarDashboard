@@ -10,13 +10,21 @@ Rectangle {
     border.color: Theme.colors.cardBorder
     radius: 15
     property int currentHour: new Date().getHours()
-    property string weatherCondition:"ThunderStorm"
+    property string weatherCondition:"Storm"
     property double presentTemp: 25
 
-
+    function iconfutureCondition(hour){
+        let diff = (hour - currentHour + 24) % 24;
+        if(weatherCondition === "Storm" || weatherCondition === "ThunderStorm"){
+            if(diff === 1) return "Rain_Heavy";
+            if(diff === 2) return "Rain_Light";
+        }
+        return "Clear";
+    }
 
     function iconweatherChanged(weatherCondition , currentHour){
         let path = "../../asset/wea/";
+        // special weather
         if(weatherCondition === "Rain_Light")
             return path + "rainlighticon.svg";
         if(weatherCondition === "Rain_Heavy")
@@ -25,23 +33,23 @@ Rectangle {
             return path + "stormicon.svg";
         if(weatherCondition === "ThunderStorm")
             return path + "thunderstorm.svg";
-
-        if(currentHour >=6 && currentHour <8)
-            return path + "suongmuicon.svg";
-        if(currentHour >=8 && currentHour < 15)
-            return path + "sunny.svg";
-        if(currentHour >=15 && currentHour <18)
-            return path + "sunnycloudicon.svg";
-
-        if(currentHour >= 23 || currentHour <5)
-            return path + "moonlighticon.svg";
-        if(currentHour >= 21)
-            return path + "nightclearicon.svg";
-        if(currentHour >=18 )
-            return path + "nightcloudicon.svg";
-        return path + "suongmuicon.svg";
         if (weatherCondition === "Cloudy")
             return path + "cloudyicon.svg";
+        //morning
+        if(currentHour >= 5 && currentHour < 7)
+            return path + "suongmuicon.svg"
+        if(currentHour >= 7 && currentHour < 9)
+            return path + "sunnycloudicon.svg";
+        if(currentHour >= 9 && currentHour < 15)
+            return path + "sunny.svg";
+        if(currentHour >= 15 && currentHour < 18)
+            return path + "sunnycloudicon.svg";
+        //night
+        if(currentHour >= 18 && currentHour < 21)
+            return path + "nightcloudicon.svg";
+        if(currentHour >= 21 && currentHour < 23)
+            return path + "nightclearicon.svg";
+        return path + "moonlighticon.svg";
     }
 
     function weatherChanged(weatherCondition, currentHour){
@@ -68,6 +76,7 @@ Rectangle {
             return path + "18h-6h.svg";
 
     }
+
     function fu_1h_wea_background(currentHour){
         return (currentHour >=6 && currentHour < 18 ) ? "#FFFFFF" : "#1C1F26"
     }
@@ -177,8 +186,8 @@ Rectangle {
                         angleVariation: 5
 
                         //fall speed
-                        magnitude: (weatherCondition === "ThunderStorm") ? 800:
-                                    (weatherCondition === "Storm") ? 650 : 500
+                        magnitude: (weatherCondition === "ThunderStorm") ? 200:
+                                    (weatherCondition === "Storm") ? 150 : 100
                         magnitudeVariation: 100
                     }
                 }
@@ -243,7 +252,7 @@ Rectangle {
                                 Layout.alignment: Qt.AlignHCenter
                             }
                             Image{
-                                source: weatherCard.iconweatherChanged(weatherCondition,futurehour)
+                                source: weatherCard.iconweatherChanged(weatherCard.iconfutureCondition(futurehour),futurehour)
                                 Layout.preferredWidth: 45
                                 Layout.preferredHeight: 45
                                 fillMode: Image.PreserveAspectFit
