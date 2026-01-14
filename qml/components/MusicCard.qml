@@ -23,7 +23,6 @@ Rectangle {
 
     // Playlist
     property int currentIndex: 0
-    readonly property var currentTrack: playlist.count > 0 ? playlist.get(currentIndex) : null
 
     // Allow changing expand menu icon color externally
     property color expandMenuColor: Theme.colors.textMain

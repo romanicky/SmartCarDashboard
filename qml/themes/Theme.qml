@@ -12,4 +12,11 @@ Item {
     function toggle() {
         isDark = !isDark
     }
+
+    function updateThemeBasedOnTime() {
+        var now = new Date();
+        var hour = now.getHours();
+        // Before 18:00 (6 PM) use light theme, otherwise use dark theme
+        isDark = hour >= 18;
+    }
 }

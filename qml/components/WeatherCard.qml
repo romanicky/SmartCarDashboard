@@ -54,18 +54,10 @@ Rectangle {
         }
     }
     function fu_1h_wea_background(currentHour) {
-        if (currentHour >= 6 && currentHour < 18) {
-            return "#FFFFFF";
-        } else {
-            return "#1C1F26";
-        }
+        return Theme.colors.card;
     }
     function textcolor(currentHour) {
-        if (currentHour >= 6 && currentHour < 18) {
-            return "#1C1F26";
-        } else {
-            return "#FFFFFF";
-        }
+        return Theme.colors.textMain;
     }
 
     function timeBasedBackgroundColor(currentHour) {
@@ -146,7 +138,7 @@ Rectangle {
                     font.bold: true
                     color: weatherCard.textcolor(currentHour)
                     style: Text.Outline
-                    styleColor: (currentHour >= 6 && currentHour < 18) ? "#FFFFFF" : "1C1F26"
+                    styleColor: (currentHour >= 6 && currentHour < 18) ? "#FFFFFF" : "#1C1F26"
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
             }
