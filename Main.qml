@@ -10,6 +10,8 @@ Window {
     color: Theme.colors.background
     visible: true
 
+    property bool showRunningView: CarInfo.gear === "D"
+
     // Timer to update theme based on current time (check every minute)
     Timer {
         interval: 1000 // Check every second
@@ -35,10 +37,11 @@ Window {
             columnSpacing: 15
             rowSpacing: 15
 
-            CarInfoCard {
+            Loader {
                 Layout.rowSpan: 2
                 Layout.preferredWidth: 300
                 Layout.fillHeight: true
+                sourceComponent: showRunningView ? runningViewComponent : carInfoComponent
             }
 
             Loader {
@@ -71,6 +74,16 @@ Window {
 
         // Bottom bar
         BottomBar {}
+    }
+
+    Component {
+        id: runningViewComponent
+        CarRunningCard {}
+    }
+
+    Component {
+        id: carInfoComponent
+        CarInfoCard {}
     }
 
     Component.onCompleted: {

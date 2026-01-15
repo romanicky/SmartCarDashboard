@@ -19,9 +19,6 @@ qt_add_qml_module(appSmartCarDashboard
     URI SmartCarDashboard
     QML_FILES
     Main.qml
-
-
-    qml/themes/qmldir
     qml/themes/Theme.qml
     qml/themes/DarkTheme.qml
     qml/themes/LightTheme.qml
@@ -35,7 +32,10 @@ qt_add_qml_module(appSmartCarDashboard
     qml/components/StatItem.qml
     qml/components/GearButton.qml
     qml/components/CameraCard.qml
+    qml/components/CarRunningCard.qml
 
+    RESOURCES
+    qml/themes/qmldir
     asset/images/car_left.svg
     asset/images/car_left.png
     asset/images/album_cover.png
@@ -49,6 +49,8 @@ qt_add_qml_module(appSmartCarDashboard
     asset/icons/cloud.svg
     asset/icons/rainny.svg
     asset/icons/moon.svg
+    asset/icons/tire_pressure.svg
+    asset/icons/headlights.svg
 
     asset/wea/6h_8h.png
     asset/wea/8h_15h.png
@@ -60,7 +62,12 @@ qt_add_qml_module(appSmartCarDashboard
     asset/wea/moon.png
     asset/wea/rainicon.png
     asset/wea/sun.png
+
     SOURCES musicplayer.h musicplayer.cpp
+    RESOURCES asset/images/car_light.png asset/images/car.png
+    RESOURCES asset/icons/left.svg asset/icons/right.svg
+    RESOURCES asset/images/charge.png
+    RESOURCES asset/images/charge.png
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

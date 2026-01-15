@@ -53,16 +53,33 @@ void CarDataReceiver::onReadyRead()
             }
             if (obj.contains("leftSignal"))
             {
-                // Store signal states if needed
+                m_carModel->setLeftSignal(obj["leftSignal"].toBool());
                 qDebug() << "Left signal:" << obj["leftSignal"].toBool();
             }
             if (obj.contains("rightSignal"))
             {
+                m_carModel->setRightSignal(obj["rightSignal"].toBool());
                 qDebug() << "Right signal:" << obj["rightSignal"].toBool();
             }
             if (obj.contains("gear"))
             {
                 m_carModel->setGear(obj["gear"].toString());
+                qDebug() << "Gear:" << obj["gear"].toString();
+            }
+            if (obj.contains("headlightsOn"))
+            {
+                m_carModel->setHeadlightsOn(obj["headlightsOn"].toBool());
+                qDebug() << "Headlights On:" << obj["headlightsOn"].toBool();
+            }
+            if (obj.contains("capacity"))
+            {
+                m_carModel->setCapacity(obj["capacity"].toDouble());
+                qDebug() << "Capacity:" << obj["capacity"].toDouble();
+            }
+            if (obj.contains("isCharging"))
+            {
+                m_carModel->setIsCharging(obj["isCharging"].toBool());
+                qDebug() << "Is Charging:" << obj["isCharging"].toBool();
             }
         }
     }
