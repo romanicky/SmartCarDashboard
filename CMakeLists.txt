@@ -58,6 +58,7 @@ qt_add_qml_module(appSmartCarDashboard
     asset/wea/18h_6h.png
     asset/wea/cloud.png
     asset/wea/rain.png
+    asset/wea/cloud.png
     asset/wea/cloudy.png
     asset/wea/moon.png
     asset/wea/rainicon.png

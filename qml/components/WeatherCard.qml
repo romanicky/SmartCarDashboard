@@ -10,7 +10,7 @@ Rectangle {
     radius: 15
     property int currentHour: new Date().getHours()
     property string weatherCondition: CarInfo.weatherCondition || "Clear"
-    property double presentTemp: CarInfo.weatherTemperature || 25
+    property double presentTemp: CarInfo.weatherTemperature || (15 + Math.random() * 20)
 
     Behavior on color {
         ColorAnimation {
@@ -91,6 +91,30 @@ Rectangle {
         onTriggered: {
             var conditions = ["Clear", "Cloudy", "Rain"];
             weatherCondition = conditions[Math.floor(Math.random() * conditions.length)];
+            // Random temperature between 15 and 35 degrees
+            presentTemp = 15 + Math.random() * 20;
+        }
+    }
+
+    Timer {
+        id: thunderTimer
+        interval: 8000
+        running: weatherCondition === "Rain"
+        repeat: true
+        onTriggered: {
+            // Random chance of lightning (40%)
+            if (Math.random() < 0.4) {
+                lightningOverlay.opacity = 0.6;
+                flashTimer.restart();
+            }
+        }
+    }
+
+    Timer {
+        id: flashTimer
+        interval: 150
+        onTriggered: {
+            lightningOverlay.opacity = 0;
         }
     }
 
@@ -136,6 +160,73 @@ Rectangle {
                 }
             }
 
+            // Rain particles effect container
+            Rectangle {
+                id: rainContainer
+                anchors.fill: parent
+                color: "transparent"
+                z: 5
+
+                Repeater {
+                    id: rainParticles
+                    model: weatherCard.weatherCondition === "Rain" ? 30 : 0
+                    delegate: Item {
+                        id: raindrop
+                        width: 2
+                        height: 10
+                        x: Math.random() * rainContainer.width
+                        y: -10
+
+                        property real randomRotation: Math.random() * 60 - 30  // Random rotation between -30 and 30 degrees
+
+                        Rectangle {
+                            width: parent.width
+                            height: parent.height
+                            color: "#A0D8FF"
+                            radius: 1
+                            opacity: 0.7
+                            anchors.centerIn: parent
+                            rotation: parent.randomRotation
+                        }
+
+                        NumberAnimation {
+                            id: fallAnimation
+                            target: raindrop
+                            property: "y"
+                            from: -10
+                            to: rainContainer.height
+                            duration: 1000 + Math.random() * 500
+                            running: weatherCard.weatherCondition === "Rain"
+                            loops: Animation.Infinite
+
+                            onFinished: {
+                                raindrop.x = Math.random() * rainContainer.width;
+                                raindrop.randomRotation = Math.random() * 60 - 30;
+                            }
+                        }
+
+                        Component.onCompleted: {
+                            fallAnimation.start();
+                        }
+                    }
+                }
+            }
+
+            // Lightning overlay effect
+            Rectangle {
+                id: lightningOverlay
+                anchors.fill: parent
+                color: "#FFFFFF"
+                opacity: 0
+                z: 6
+
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 100
+                    }
+                }
+            }
+
             Column {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: parent.top
@@ -174,6 +265,7 @@ Rectangle {
 
                         property int futurehour: (currentHour + index + 1) % 24
                         property string futureStatus: "Clear"
+                        property double futureTemp: 15 + Math.random() * 20
 
                         ColumnLayout {
                             anchors.centerIn: parent
@@ -192,7 +284,7 @@ Rectangle {
                                 Layout.alignment: Qt.AlignHCenter
                             }
                             Text {
-                                text: "25℃"
+                                text: futureTemp.toFixed(1) + "℃"
                                 color: weatherCard.textcolor(currentHour)
                                 Layout.alignment: Qt.AlignHCenter
                             }
