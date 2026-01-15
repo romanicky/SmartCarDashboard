@@ -23,7 +23,7 @@ Rectangle {
             return "../../asset/icons/rainny.svg";
         }
         if (weatherCondition === "Cloudy") {
-            return "../../asset/icons/cloudy.svg";
+            return "../../asset/icons/cloud.svg";
         }
         if (weatherCondition === "Clear") {
             if (currentHour >= 6 && currentHour <= 18) {
@@ -81,6 +81,16 @@ Rectangle {
             if (currentHour !== newHour) {
                 currentHour = newHour;
             }
+        }
+    }
+
+    Timer {
+        interval: 5000  // Change weather condition every 5 seconds
+        running: true
+        repeat: true
+        onTriggered: {
+            var conditions = ["Clear", "Cloudy", "Rain"];
+            weatherCondition = conditions[Math.floor(Math.random() * conditions.length)];
         }
     }
 
