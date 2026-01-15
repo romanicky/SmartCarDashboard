@@ -9,13 +9,14 @@ class CarSimulatorGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Vehicle Simulator Control")
-        self.root.geometry("300x250")
+        self.root.geometry("300x300")
 
         self.speed = 0
         self.left_signal = False
         self.right_signal = False
         self.headlights_on = False
         self.capacity = 100.0
+        self.is_charging = False
 
         # --- UI Components ---
         self.btn_add = tk.Button(root, text="+10 km/h", command=self.increase_speed)
@@ -47,12 +48,16 @@ class CarSimulatorGUI:
         
         self.current_gear = "N"
 
-        # Khởi động luồng mạng (Socket)
+        # Start thread (Socket)
         self.server_thread = threading.Thread(target=self.start_server, daemon=True)
         self.server_thread.start()
 
         # Start capacity drain timer
         self.drain_capacity()
+
+        # --- Charge Button ---
+        self.btn_charge = tk.Button(root, text="Charge Battery", command=self.start_charge)
+        self.btn_charge.pack(pady=5)
 
     def drain_capacity(self):
         if self.capacity > 0 and self.current_gear == "D" and self.speed > 0:
@@ -110,12 +115,24 @@ class CarSimulatorGUI:
                         "rightSignal": self.right_signal,
                         "gear": self.current_gear,
                         "headlightsOn": self.headlights_on,
-                        "capacity": self.capacity
+                        "capacity": self.capacity,
+                        "isCharging": self.is_charging
                     }
                     conn.send((json.dumps(data) + "\n").encode())
-                    time.sleep(0.1) # Gửi dữ liệu mỗi 100ms
+                    time.sleep(0.1)
             except:
                 conn.close()
+
+    def charge_battery(self):
+        self.is_charging = True
+        while self.capacity < 100:
+            if self.current_gear == "P":
+                self.capacity = min(100, self.capacity + 10)
+            time.sleep(1)
+        self.is_charging = False
+
+    def start_charge(self):
+        threading.Thread(target=self.charge_battery, daemon=True).start()
 
 if __name__ == "__main__":
     root = tk.Tk()

@@ -66,6 +66,8 @@ qt_add_qml_module(appSmartCarDashboard
     SOURCES musicplayer.h musicplayer.cpp
     RESOURCES asset/images/car_light.png asset/images/car.png
     RESOURCES asset/icons/left.svg asset/icons/right.svg
+    RESOURCES asset/images/charge.png
+    RESOURCES asset/images/charge.png
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

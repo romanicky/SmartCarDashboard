@@ -76,6 +76,11 @@ void CarDataReceiver::onReadyRead()
                 m_carModel->setCapacity(obj["capacity"].toDouble());
                 qDebug() << "Capacity:" << obj["capacity"].toDouble();
             }
+            if (obj.contains("isCharging"))
+            {
+                m_carModel->setIsCharging(obj["isCharging"].toBool());
+                qDebug() << "Is Charging:" << obj["isCharging"].toBool();
+            }
         }
     }
 }

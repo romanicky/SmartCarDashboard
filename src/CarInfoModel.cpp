@@ -94,3 +94,12 @@ void CarInfoModel::setRightSignal(bool on)
     m_rightSignal = on;
     emit rightSignalChanged();
 }
+
+bool CarInfoModel::isCharging() const { return m_isCharging; }
+void CarInfoModel::setIsCharging(bool on)
+{
+    if (m_isCharging == on)
+        return;
+    m_isCharging = on;
+    emit isChargingChanged();
+}

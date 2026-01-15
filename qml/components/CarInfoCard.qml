@@ -9,6 +9,15 @@ DashboardCard {
 
     property color batteryColor: CarInfo.capacity >= 80 ? "#25CB55" : (CarInfo.capacity >= 56 ? "#FFA500" : (CarInfo.capacity >= 30 ? "#FFFF00" : "#FF0000"))
 
+    Timer {
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: {
+            carImage.source = CarInfo.isCharging ? "../../asset/images/charge.png" : CarInfo.imageSource;
+        }
+    }
+
     ColumnLayout {
         anchors.fill: parent
         anchors.margins: 25
@@ -19,7 +28,8 @@ DashboardCard {
             Layout.fillWidth: true
             spacing: 5
             Image {
-                source: CarInfo.imageSource
+                id: carImage
+                source: CarInfo.isCharging ? "../../asset/images/charge.png" : CarInfo.imageSource
                 fillMode: Image.PreserveAspectFit
                 Layout.fillWidth: true
                 Layout.fillHeight: true

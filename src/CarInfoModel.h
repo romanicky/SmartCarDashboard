@@ -17,6 +17,7 @@ class CarInfoModel : public QObject
     Q_PROPERTY(bool headlightsOn READ headlightsOn WRITE setHeadlightsOn NOTIFY headlightsOnChanged)
     Q_PROPERTY(bool leftSignal READ leftSignal WRITE setLeftSignal NOTIFY leftSignalChanged)
     Q_PROPERTY(bool rightSignal READ rightSignal WRITE setRightSignal NOTIFY rightSignalChanged)
+    Q_PROPERTY(bool isCharging READ isCharging WRITE setIsCharging NOTIFY isChargingChanged)
 
 public:
     explicit CarInfoModel(QObject *parent = nullptr);
@@ -51,6 +52,9 @@ public:
     bool rightSignal() const;
     void setRightSignal(bool on);
 
+    bool isCharging() const;
+    void setIsCharging(bool on);
+
 signals:
     void vehicleNameChanged();
     void speedChanged();
@@ -62,6 +66,7 @@ signals:
     void headlightsOnChanged();
     void leftSignalChanged();
     void rightSignalChanged();
+    void isChargingChanged();
 
 private:
     QString m_vehicleName;
@@ -74,6 +79,7 @@ private:
     bool m_headlightsOn = false;
     bool m_leftSignal = false;
     bool m_rightSignal = false;
+    bool m_isCharging = false;
 };
 
 #endif
