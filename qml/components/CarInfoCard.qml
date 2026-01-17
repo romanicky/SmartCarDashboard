@@ -23,6 +23,23 @@ DashboardCard {
         anchors.margins: 25
         spacing: 20
 
+        RowLayout {
+            spacing: 12
+
+            Text {
+                text: "ODO "
+                color: Theme.colors.textSecondary
+                font.pixelSize: 18
+            }
+
+            Text {
+                text: String(CarInfo.odometer) + " km"
+                color: Theme.colors.textMain
+                font.pixelSize: 20
+                font.bold: true
+            }
+        }
+
         // 1. Image & Model Name
         ColumnLayout {
             Layout.fillWidth: true

@@ -9,6 +9,28 @@
         <file>asset/icons/pause.svg</file>
         <file>asset/icons/play.svg</file>
         <file>asset/icons/prev.svg</file>
+        <file>asset/wea/6-8h.svg</file>
+        <file>asset/wea/8h-15h.svg</file>
+        <file>asset/wea/15h-18h.svg</file>
+        <file>asset/wea/15h-18hv2.svg</file>
+        <file>asset/wea/18h-6h.svg</file>
+        <file>asset/wea/cloudy.svg</file>
+        <file>asset/wea/cloudyicon.svg</file>
+        <file>asset/wea/nightcloudicon.svg</file>
+        <file>asset/wea/rainheavyicon.svg</file>
+        <file>asset/wea/rainicon.svg</file>
+        <file>asset/wea/rainlighticon.svg</file>
+        <file>asset/wea/rainmode.svg</file>
+        <file>asset/wea/stormicon.svg</file>
+        <file>asset/wea/sunny.svg</file>
+        <file>asset/wea/sunnycloudicon.svg</file>
+        <file>asset/wea/suongmuicon.svg</file>
+        <file>asset/wea/thunderstorm.svg</file>
+        <file>asset/wea/moonlighticon.svg</file>
+        <file>asset/wea/nightclearicon.svg</file>
+        <file>asset/wea/hatmuaicon.svg</file>
+        <file>asset/icons/left.svg</file>
+        <file>asset/icons/right.svg</file>
         <file>asset/musics/LuonYeuDoi-Den-8692742.mp3</file>
         <file>asset/musics/MuonNganGiacMo-Kha-35861436.mp3</file>
         <file>asset/musics/ThucGiac-DaLAB-7048212.mp3</file>
